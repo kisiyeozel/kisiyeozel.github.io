@@ -2,107 +2,211 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kisiyeozel.org - 3D Deneyim</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Kisiyeozel.org - 3D Tasarım Atölyesi</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
-
         * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             overflow: hidden;
-            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            background: radial-gradient(circle at center, #1a202c 0%, #000000 100%);
             font-family: 'Poppins', sans-serif;
             color: white;
             user-select: none;
+            touch-action: none;
         }
 
         #canvas-container {
             position: absolute; top: 0; left: 0; width: 100%; height: 100%;
         }
 
-        /* UI Paneli */
-        #ui-panel {
+        /* Sol Üst Logo ve Tarih */
+        .top-bar {
             position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            padding: 40px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            width: 90%;
-            max-width: 380px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            transition: opacity 0.5s, transform 0.5s;
+            top: 20px;
+            left: 20px;
             z-index: 10;
-        }
-
-        #ui-panel.fade-out {
-            opacity: 0;
-            transform: translate(-50%, -60%);
             pointer-events: none;
         }
 
-        .logo-text { font-size: 2rem; font-weight: 900; color: #ffd700; margin-bottom: 10px; }
-        .subtitle { font-size: 0.9rem; color: #ccc; margin-bottom: 30px; }
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            color: #d4af37;
+            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
+        }
+
+        .date-badge {
+            display: inline-block;
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid #d4af37;
+            color: #d4af37;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            font-weight: 600;
+        }
+
+        /* Sağ Alt Kontrol Paneli */
+        #ui-panel {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(15px);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            width: 350px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            z-index: 10;
+            transition: transform 0.5s, opacity 0.5s;
+        }
+
+        #ui-panel.hidden {
+            transform: translateY(150%);
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .panel-title {
+            font-size: 1.2rem;
+            color: #fff;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .product-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .product-btn {
+            flex: 1;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            padding: 10px 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .product-btn.active {
+            background: #d4af37;
+            border-color: #d4af37;
+            color: black;
+            font-weight: bold;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 5px;
+        }
 
         input[type="text"] {
-            width: 100%; padding: 15px;
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px; color: white;
-            font-size: 1.1rem; margin-bottom: 20px;
-            text-align: center; outline: none;
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 10px;
+            color: #d4af37;
+            font-size: 1.1rem;
+            font-family: 'Playfair Display', serif;
+            outline: none;
         }
 
-        .color-options {
-            display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;
+        input[type="text"]::placeholder {
+            color: rgba(212, 175, 55, 0.3);
         }
 
-        .color-opt {
-            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
-            border: 3px solid transparent; transition: transform 0.2s;
+        #btn-confirm {
+            background: linear-gradient(45deg, #d4af37, #f3e5ab);
+            color: #000;
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            transition: transform 0.2s;
         }
 
-        .color-opt:hover { transform: scale(1.1); }
-        .color-opt.selected { border-color: white; transform: scale(1.2); }
-
-        #btn-prepare {
-            background: linear-gradient(45deg, #ffd700, #ffae00);
-            color: #000; border: none; padding: 15px;
-            font-size: 1.1rem; font-weight: 900; border-radius: 30px;
-            cursor: pointer; width: 100%; transition: transform 0.2s;
-        }
-        #btn-prepare:active { transform: scale(0.95); }
+        #btn-confirm:active { transform: scale(0.95); }
 
         /* Sonuç Ekranı */
         #result-screen {
-            position: absolute; top: 50%; left: 50%;
+            position: absolute;
+            top: 50%; left: 50%;
             transform: translate(-50%, -50%);
-            text-align: center; opacity: 0; pointer-events: none;
-            transition: opacity 1s; z-index: 5; width: 100%;
+            text-align: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 1s;
+            z-index: 5;
+            width: 100%;
         }
 
-        #result-screen.fade-in { opacity: 1; pointer-events: auto; }
+        #result-screen.fade-in {
+            opacity: 1;
+            pointer-events: auto;
+        }
         
-        h1 {
-            font-size: 3.5rem; font-weight: 900; margin: 10px 0;
-            color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5);
+        #result-screen h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            color: #d4af37;
+            margin-bottom: 10px;
+            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
         }
 
-        .discount-code {
-            display: inline-block; border: 2px dashed #ffd700;
-            padding: 15px 30px; font-size: 2rem; font-weight: 900;
-            color: #fff; margin: 20px 0; border-radius: 10px;
-            background: rgba(0,0,0,0.5);
+        .discount-box {
+            display: inline-block;
+            background: rgba(0,0,0,0.8);
+            border: 2px dashed #d4af37;
+            padding: 20px 40px;
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: #fff;
+            margin: 20px 0;
+            border-radius: 15px;
+            letter-spacing: 2px;
         }
 
-        #instruction {
-            position: absolute; bottom: 20px; left: 50%;
-            transform: translateX(-50%); font-size: 0.8rem;
-            color: rgba(255,255,255,0.4); pointer-events: none;
+        .instruction {
+            position: absolute;
+            bottom: 30px;
+            left: 30px;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+            pointer-events: none;
+        }
+
+        @media (max-width: 768px) {
+            #ui-panel {
+                right: 50%;
+                transform: translateX(50%);
+                width: 90%;
+                bottom: 20px;
+            }
+            #ui-panel.hidden {
+                transform: translate(50%, 150%);
+            }
+            .instruction { display: none; }
         }
     </style>
 </head>
@@ -110,44 +214,52 @@
 
     <div id="canvas-container"></div>
 
+    <div class="top-bar">
+        <div class="logo">Kisiyeozel.org</div>
+        <div class="date-badge">📅 1 Haziran'da Açılıyoruz</div>
+    </div>
+
+    <div class="instruction">
+        <span style="font-size: 1.5rem;">👆</span><br>
+        Ürünü incelemek için<br>sürükle ve çevir
+    </div>
+
     <div id="ui-panel">
-        <div class="logo-text">Kisiyeozel.org</div>
-        <p class="subtitle">Sana özel dünyanın kapıları aralanıyor...</p>
+        <div class="panel-title">Tasarımını Oluştur</div>
         
-        <input type="text" id="user-name" placeholder="Adını Buraya Yaz" maxlength="15" autocomplete="off">
-        
-        <div class="color-options">
-            <div class="color-opt selected" style="background-color: #ffd700;" data-color="#ffd700"></div>
-            <div class="color-opt" style="background-color: #ff4757;" data-color="#ff4757"></div>
-            <div class="color-opt" style="background-color: #2ed573;" data-color="#2ed573"></div>
-            <div class="color-opt" style="background-color: #1e90ff;" data-color="#1e90ff"></div>
+        <div class="product-selector">
+            <button class="product-btn active" data-type="monopoly">Monopoly</button>
+            <button class="product-btn" data-type="book">Kitap</button>
+            <button class="product-btn" data-type="calendar">Takvim</button>
         </div>
 
-        <button id="btn-prepare">Kutumu Hazırla</button>
+        <div class="input-group">
+            <label>Ürüne Yazılacak İsim veya Mesaj</label>
+            <input type="text" id="user-name" placeholder="Örn: Yılmaz Ailesi" maxlength="20" autocomplete="off">
+        </div>
+
+        <button id="btn-confirm">Tasarımımı Onayla</button>
     </div>
 
     <div id="result-screen">
-        <p>Senin İçin Hazırlandı</p>
+        <p style="font-size: 1.2rem; color: #ccc;">Harika bir seçim!</p>
         <h1>1 HAZİRAN</h1>
-        <p>Büyük Açılışı Kaçırma!</p>
-        <div class="discount-code">KISIYEOZEL2026</div>
-        <p>İlk siparişine özel indirim kodun.</p>
+        <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">Bu tasarım 1 Haziran'da gerçeğe dönüşmeyi bekliyor. Açılış günü sitemize gel ve aşağıdaki kod ile bu ürüne özel indirimle sahip ol.</p>
+        <div class="discount-box">KISIYEOZEL26</div>
     </div>
-
-    <div id="instruction">Fare veya parmağınla kutuyu çevirebilirsin</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
         let scene, camera, renderer, controls;
-        let box, boxCap, textMesh, particleSystem;
-        let isOpened = false;
+        let activeProduct, textMesh, particleSystem;
+        let isConfirmed = false;
 
         function init() {
             scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 1.5, 5);
+            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 3, 5); // Kamerayı biraz daha yukarıdan baktırıyoruz
 
             renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             renderer.setSize(window.innerWidth, window.innerHeight);
@@ -158,55 +270,92 @@
             controls.enableDamping = true;
             controls.dampingFactor = 0.05;
             controls.enablePan = false;
-            controls.minDistance = 3;
-            controls.maxDistance = 7;
+            controls.minDistance = 2;
+            controls.maxDistance = 8;
 
-            scene.add(new THREE.AmbientLight(0xffffff, 0.3));
-            
-            const spotLight = new THREE.SpotLight(0xffffff, 1);
-            spotLight.position.set(5, 5, 5);
+            // Premium Işıklandırma
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
+            scene.add(ambientLight);
+
+            const spotLight = new THREE.SpotLight(0xfffaed, 1); // Hafif sıcak ışık
+            spotLight.position.set(5, 8, 5);
+            spotLight.angle = Math.PI / 4;
+            spotLight.penumbra = 0.5;
             scene.add(spotLight);
 
-            const pointLight = new THREE.PointLight(0xffffff, 0.5);
-            pointLight.position.set(-5, 5, -5);
-            scene.add(pointLight);
+            const backLight = new THREE.PointLight(0xd4af37, 0.5); // Arkadan altın yansıması
+            backLight.position.set(-5, 3, -5);
+            scene.add(backLight);
 
-            createBox();
+            // Başlangıç ürünü
+            switchProduct('monopoly');
             animate();
         }
 
-        function createBox() {
-            const material = new THREE.MeshPhongMaterial({
-                color: 0x111111,
-                shininess: 10,
+        // Ürün Geometrileri ve Materyalleri
+        function switchProduct(type) {
+            if (activeProduct) {
+                scene.remove(activeProduct);
+            }
+
+            // Koyu gri/siyah premium doku
+            const material = new THREE.MeshPhongMaterial({ 
+                color: 0x151515, 
+                shininess: 40,
+                specular: 0x222222
             });
 
-            const boxGeo = new THREE.BoxGeometry(2, 1.5, 2);
-            box = new THREE.Mesh(boxGeo, material);
-            scene.add(box);
+            let geometry;
+            if (type === 'monopoly') {
+                // Geniş ince oyun tahtası
+                geometry = new THREE.BoxGeometry(3, 0.1, 3);
+            } else if (type === 'book') {
+                // Kalın kapaklı kitap
+                geometry = new THREE.BoxGeometry(1.8, 2.4, 0.4);
+            } else if (type === 'calendar') {
+                // Masa takvimi yapısı (hafif eğimli)
+                geometry = new THREE.BoxGeometry(2, 1.5, 0.1);
+            }
 
-            const capGeo = new THREE.BoxGeometry(2.1, 0.3, 2.1);
-            boxCap = new THREE.Mesh(capGeo, material);
-            boxCap.position.y = 0.9;
-            box.add(boxCap); 
+            activeProduct = new THREE.Mesh(geometry, material);
+
+            // Takvimse hafif dikleştir
+            if(type === 'calendar') {
+                activeProduct.rotation.x = -Math.PI / 6;
+                activeProduct.position.y = 0.5;
+            } else {
+                activeProduct.rotation.x = 0;
+                activeProduct.position.y = 0;
+            }
+
+            scene.add(activeProduct);
+            
+            // Mevcut yazıyı yeni ürüne uygula
+            const currentName = document.getElementById('user-name').value || "İSMİNİZ";
+            applyText(currentName, type);
         }
 
+        // Şık, Altın Rengi Yazı Oluşturma
         function createTextTexture(text) {
             const canvas = document.createElement('canvas');
-            canvas.width = 1024; // Çözünürlüğü artırdık, yazı daha net olacak
+            canvas.width = 1024; 
             canvas.height = 256;
             const ctx = canvas.getContext('2d');
             
-            // Arka planı tamamen temizle (şeffaf)
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // Beyaz renk, kalın font
-            ctx.fillStyle = '#ffffff';
-            ctx.font = 'bold 90px Arial, sans-serif'; // Daha standart bir font kullandık
+            // Altın rengi ve zarif tırnaklı font (Playfair/Georgia/Serif)
+            ctx.fillStyle = '#d4af37';
+            ctx.font = 'bold 80px "Playfair Display", Georgia, serif'; 
             ctx.textAlign = 'center';
             ctx.textBaseline = 'middle';
             
-            // İsim çok uzunsa sığması için ayarlama
+            // Metne hafif gölge ekleyerek kabartma/varak hissi verme
+            ctx.shadowColor = 'rgba(0,0,0,0.5)';
+            ctx.shadowBlur = 4;
+            ctx.shadowOffsetX = 2;
+            ctx.shadowOffsetY = 2;
+
             ctx.fillText(text.toUpperCase(), canvas.width / 2, canvas.height / 2);
             
             const texture = new THREE.CanvasTexture(canvas);
@@ -214,153 +363,144 @@
             return texture;
         }
 
-        let selectedColor = "#ffd700";
-        document.querySelectorAll('.color-opt').forEach(opt => {
-            opt.addEventListener('click', function() {
-                document.querySelector('.color-opt.selected').classList.remove('selected');
-                this.classList.add('selected');
-                selectedColor = this.dataset.color;
+        // Yazıyı ürüne yerleştirme
+        function applyText(text, type) {
+            if (textMesh) {
+                activeProduct.remove(textMesh);
+            }
+
+            const textGeo = new THREE.PlaneGeometry(2.5, 0.625); // Oranı canvas'a uygun (1024x256)
+            const textMat = new THREE.MeshBasicMaterial({
+                map: createTextTexture(text),
+                transparent: true,
+                alphaTest: 0.1
+            });
+
+            textMesh = new THREE.Mesh(textGeo, textMat);
+
+            // Ürüne göre yazının nerede duracağını ayarla
+            if (type === 'monopoly') {
+                textMesh.position.set(0, 0.051, 0); // Tahtanın tam üstü
+                textMesh.rotation.x = -Math.PI / 2; // Yere paralel
+            } else if (type === 'book') {
+                textMesh.position.set(0, 0.5, 0.201); // Kitabın ön kapağının üst kısmı
+                textMesh.rotation.x = 0;
+                textMesh.scale.set(0.6, 0.6, 0.6); // Kitaba sığması için küçült
+            } else if (type === 'calendar') {
+                textMesh.position.set(0, 0, 0.051); // Takvimin ön yüzü
+                textMesh.rotation.x = 0;
+                textMesh.scale.set(0.7, 0.7, 0.7);
+            }
+
+            activeProduct.add(textMesh);
+        }
+
+        // Arayüz Dinleyicileri (UI Listeners)
+        document.querySelectorAll('.product-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if(isConfirmed) return;
+                document.querySelector('.product-btn.active').classList.remove('active');
+                e.target.classList.add('active');
+                switchProduct(e.target.dataset.type);
             });
         });
 
-        document.getElementById('btn-prepare').addEventListener('click', () => {
+        document.getElementById('user-name').addEventListener('input', (e) => {
+            if(isConfirmed) return;
+            const type = document.querySelector('.product-btn.active').dataset.type;
+            applyText(e.target.value || "İSMİNİZ", type);
+        });
+
+        // Tasarımı Onayla Butonu
+        document.getElementById('btn-confirm').addEventListener('click', () => {
             const name = document.getElementById('user-name').value.trim();
             if(!name) {
-                alert("Lütfen bir isim girin!");
+                alert("Lütfen tasarıma eklenecek bir isim yazın!");
                 return;
             }
 
-            document.getElementById('ui-panel').classList.add('fade-out');
-            document.getElementById('instruction').style.display = 'none';
-
-            transformBox(name, selectedColor);
-        });
-
-        function transformBox(name, colorHex) {
-            const targetColor = new THREE.Color(colorHex);
-            const startColor = box.material.color.clone();
+            isConfirmed = true;
+            document.getElementById('ui-panel').classList.add('hidden');
             
-            // Kutuyu tam olarak kameraya (öne) bakacak şekilde hizalamak için hedef açı hesapla
-            const startRotY = box.rotation.y;
-            // En yakın 360 dereceye (2 * PI) yuvarlıyoruz ki tam öne dönsün
-            const targetRotY = Math.round(startRotY / (Math.PI * 2)) * Math.PI * 2; 
-
-            let progress = 0;
-
-            function animateColor() {
-                progress += 0.02; 
-                if (progress <= 1) {
-                    // 1. Renk değiştir
-                    box.material.color.lerpColors(startColor, targetColor, progress);
-                    box.material.shininess = progress * 100;
-                    boxCap.material.color.copy(box.material.color);
-                    boxCap.material.shininess = box.material.shininess;
-
-                    // 2. Kutuyu yumuşakça tam öne çevir
-                    box.rotation.y = startRotY + (targetRotY - startRotY) * progress;
-
-                    requestAnimationFrame(animateColor);
-                } else {
-                    box.rotation.y = targetRotY; // Son hizalamayı kesinleştir
-                    addNameAndOpen(name);
-                }
-            }
-            animateColor();
-        }
-
-        function addNameAndOpen(name) {
-            const textPlaneGeo = new THREE.PlaneGeometry(1.8, 0.45);
-            const textMaterial = new THREE.MeshBasicMaterial({
-                map: createTextTexture(name),
-                transparent: true,
-                alphaTest: 0.1 // Siyah/şeffaf alanlardaki artefaktları engeller
-            });
-            textMesh = new THREE.Mesh(textPlaneGeo, textMaterial);
-            
-            // Yazıyı kutunun ön yüzeyine yapıştır
-            textMesh.position.set(0, 0, 1.01); 
-            box.add(textMesh);
-
-            setTimeout(openBox, 1200);
-        }
-
-        function openBox() {
-            isOpened = true;
-            controls.enableRotate = false; 
-            
+            // Kamerayı ürüne odakla
+            const targetCamPos = new THREE.Vector3(0, 2, 4);
             let camProgress = 0;
             const startCamPos = camera.position.clone();
-            const targetCamPos = new THREE.Vector3(0, 1.5, 4.5);
 
-            function openAnimation() {
-                let animActive = false;
-
-                if(camProgress < 1) {
-                    camProgress += 0.02;
+            function focusAnimation() {
+                camProgress += 0.02;
+                if(camProgress <= 1) {
                     camera.position.lerpVectors(startCamPos, targetCamPos, camProgress);
-                    camera.lookAt(0, 0, 0);
-                    animActive = true;
-                }
-
-                if(boxCap.position.y < 3) {
-                    boxCap.position.y += 0.02;
-                    boxCap.position.z -= 0.01;
-                    boxCap.rotation.x -= 0.015;
-                    animActive = true;
-                }
-
-                if(animActive) {
-                    requestAnimationFrame(openAnimation);
+                    camera.lookAt(0,0,0);
+                    requestAnimationFrame(focusAnimation);
                 } else {
-                    createParticles();
+                    createCelebration();
                     setTimeout(() => {
                         document.getElementById('result-screen').classList.add('fade-in');
                     }, 500);
                 }
             }
-            openAnimation();
-        }
+            focusAnimation();
+        });
 
-        function createParticles() {
-            const innerLight = new THREE.PointLight(0xffd700, 2, 10);
-            innerLight.position.set(0, 0.5, 0);
-            scene.add(innerLight);
-
-            const particleCount = 100;
+        // Altın Partikül Efekti (Kutlama)
+        function createCelebration() {
+            const particleCount = 200;
             const geometry = new THREE.BufferGeometry();
             const positions = new Float32Array(particleCount * 3);
+            const velocities = [];
 
-            for(let i = 0; i < particleCount * 3; i++) {
-                positions[i] = (Math.random() - 0.5) * 1.5;
+            for(let i = 0; i < particleCount * 3; i+=3) {
+                positions[i] = (Math.random() - 0.5) * 2; // x
+                positions[i+1] = Math.random() * 2;       // y
+                positions[i+2] = (Math.random() - 0.5) * 2; // z
+
+                velocities.push({
+                    x: (Math.random() - 0.5) * 0.05,
+                    y: Math.random() * 0.05 + 0.02,
+                    z: (Math.random() - 0.5) * 0.05
+                });
             }
 
             geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
 
             const material = new THREE.PointsMaterial({
-                color: 0xffd700,
-                size: 0.05,
+                color: 0xd4af37,
+                size: 0.08,
                 transparent: true,
                 blending: THREE.AdditiveBlending
             });
 
             particleSystem = new THREE.Points(geometry, material);
+            particleSystem.userData = { velocities: velocities };
             scene.add(particleSystem);
         }
 
+        // Render Döngüsü
         function animate() {
             requestAnimationFrame(animate);
 
-            if (!isOpened && box) {
-                // Sadece bekleme modundayken dönsün
-                box.rotation.y += 0.003;
+            // Kullanıcı onaylamadıysa ürün yavaşça dönsün
+            if (!isConfirmed && activeProduct) {
+                activeProduct.rotation.y += 0.002;
             }
 
-            if (isOpened && particleSystem) {
+            // Partikül animasyonu
+            if (particleSystem) {
                 const positions = particleSystem.geometry.attributes.position.array;
-                for (let i = 1; i < positions.length; i += 3) {
-                    positions[i] += 0.02; 
-                    if (positions[i] > 3) {
-                        positions[i] = 0; 
+                const vels = particleSystem.userData.velocities;
+                
+                for (let i = 0, j=0; i < positions.length; i += 3, j++) {
+                    positions[i] += vels[j].x;
+                    positions[i+1] += vels[j].y;
+                    positions[i+2] += vels[j].z;
+
+                    // Yerçekimi etkisi (yavaşça aşağı düşme)
+                    vels[j].y -= 0.001; 
+
+                    if (positions[i+1] < -2) {
+                        positions[i+1] = 2; // Ekranın üstünden tekrar başla
+                        vels[j].y = Math.random() * 0.05 + 0.02;
                     }
                 }
                 particleSystem.geometry.attributes.position.needsUpdate = true;
