@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kişiye Özel</title>
+    <title>kisiyeozel.org | Bir Özel Deneyim</title>
     <style>
-        * { box-sizing: border-box; touch-action: manipulation; }
+        /* TEMEL STİLLER - Reset ve Font */
+        * { box-sizing: border-box; margin: 0; padding: 0; outline: none; touch-action: manipulation; }
         body { 
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
             background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%); 
             color: #fff; 
             margin: 0; 
@@ -17,68 +18,126 @@
             align-items: center; 
             min-height: 100vh; 
             text-align: center; 
+            overflow-x: hidden;
         }
+
+        /* ARKA PLAN GRAFİĞİ (Partikül Efekti) */
+        .bg-particles {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background-image: 
+                radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 3px),
+                radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 2px),
+                radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 3px);
+            background-size: 550px 550px, 350px 350px, 250px 250px;
+            background-position: 0 0, 40px 60px, 130px 270px;
+            z-index: -1;
+            opacity: 0.08;
+            filter: blur(1px);
+        }
+
+        /* ANA KART VE LOGO BÖLÜMÜ */
         .card { 
-            background: rgba(30, 30, 50, 0.65); 
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: 25px 20px; 
-            border-radius: 24px; 
+            background: rgba(30, 30, 50, 0.7); 
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 30px 25px; 
+            border-radius: 28px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(0, 173, 181, 0.1); 
-            max-width: 400px; 
+            max-width: 420px; 
             width: 90%; 
             border: 1px solid rgba(255, 255, 255, 0.08); 
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            position: relative;
         }
-        .logo-container { width: 100px; height: 100px; margin: 0 auto 15px auto; }
-        .logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #00adb5; box-shadow: 0 0 15px rgba(0, 173, 181, 0.4); }
-        h1 { margin: 0 0 5px 0; font-size: 24px; font-weight: 700; background: linear-gradient(45deg, #fff, #00adb5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #b3b3b3; font-size: 13px; margin-bottom: 15px; margin-top: 0; }
-        .links { display: flex; gap: 10px; margin-bottom: 15px; }
-        .links a { flex: 1; display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff; text-decoration: none; padding: 10px; border-radius: 12px; font-weight: 600; font-size: 13px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
-        .links a:hover { background: #00adb5; box-shadow: 0 0 15px rgba(0, 173, 181, 0.4); border-color: #00adb5; }
+        .logo-container { width: 120px; height: 120px; margin: 0 auto 20px auto; position: relative; }
+        .logo { 
+            width: 100%; height: 100%; border-radius: 50%; object-fit: cover; 
+            border: 2px solid #00adb5; 
+            box-shadow: 0 0 25px rgba(0, 173, 181, 0.5);
+            background: #1e1e32;
+        }
         
-        .countdown-title { font-size: 10px; color: #00adb5; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
-        .countdown { display: flex; justify-content: space-between; margin-top: 8px; background: rgba(0, 0, 0, 0.3); padding: 10px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.03); }
+        /* METİN VE BAŞLIKLAR */
+        h1 { margin: 0 0 8px 0; font-size: 30px; font-weight: 800; letter-spacing: -0.5px; background: linear-gradient(45deg, #fff, #00adb5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .subtitle { color: #aaaaaa; font-size: 16px; margin-bottom: 25px; font-weight: 500; }
+        
+        /* GERİ SAYIM SAYACI */
+        .countdown-title { margin-top: 30px; font-size: 13px; color: #00adb5; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .countdown { display: flex; justify-content: space-between; gap: 8px; margin-top: 12px; background: rgba(0, 0, 0, 0.35); padding: 15px; border-radius: 18px; border: 1px solid rgba(255, 255, 255, 0.03); }
         .countdown-item { flex: 1; display: flex; flex-direction: column; }
-        .countdown-time { font-size: 16px; font-weight: 700; color: #fff; }
-        .countdown-label { font-size: 8px; color: #777; }
+        .countdown-time { font-size: 22px; font-weight: 700; color: #fff; font-variant-numeric: tabular-nums; }
+        .countdown-label { font-size: 10px; color: #888; margin-top: 4px; text-transform: uppercase; }
 
-        /* Oyunlar Bölümü */
-        .games-section { max-width: 400px; width: 90%; }
-        .game-tabs { display: flex; gap: 8px; margin-bottom: 15px; }
-        .tab-btn { flex: 1; background: #222831; border: 1px solid #393e46; color: #aaa; padding: 12px 5px; border-radius: 12px; font-weight: 600; font-size: 13px; cursor: pointer; transition: 0.3s; }
-        .tab-btn.active { background: #00adb5; color: #fff; border-color: #00adb5; box-shadow: 0 0 15px rgba(0,173,181,0.4); }
+        /* BUTONLAR VE KEŞFET BÖLÜMÜ */
+        .discover-section { max-width: 420px; width: 90%; text-align: left; }
+        .discover-title { font-size: 13px; color: #777; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 15px; text-align: center; }
         
+        .tab-btn { 
+            width: 100%; 
+            background: rgba(20, 20, 35, 0.85); 
+            border: 1px solid rgba(255,255,255,0.05); 
+            color: #ddd; 
+            padding: 16px; 
+            border-radius: 16px; 
+            font-weight: 600; 
+            font-size: 14px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        .tab-btn:hover, .tab-btn.active { 
+            background: #00adb5; 
+            color: #fff; 
+            border-color: #00adb5; 
+            box-shadow: 0 0 20px rgba(0,173,181,0.4); 
+            transform: translateY(-2px);
+        }
+        .tab-btn-icon { margin-right: 15px; font-size: 20px; color: #fff; }
+
+        /* OYUNLAR VE İÇERİK KONTEYNERI */
         .game-container { 
-            background: rgba(20, 20, 35, 0.8); border: 1px solid rgba(255,255,255,0.05); border-radius: 20px; padding: 15px; display: none; 
+            background: rgba(15, 15, 25, 0.9); 
+            border: 1px solid rgba(255,255,255,0.03); 
+            border-radius: 20px; 
+            padding: 15px; 
+            display: none; 
+            min-height: 280px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            position: relative;
         }
         .game-container.active { display: block; }
-        
         canvas { background: #0b0b13; display: block; margin: 0 auto; border-radius: 12px; border: 1px solid #222; max-width: 100%; }
-        .game-btn { background: #00adb5; border: none; color: white; padding: 8px 16px; border-radius: 8px; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 13px; transition: 0.2s; }
+        .game-btn { background: #00adb5; border: none; color: white; padding: 10px 20px; border-radius: 10px; margin-top: 15px; font-weight: bold; cursor: pointer; font-size: 14px; transition: 0.2s; }
         .game-btn:hover { background: #008c92; }
 
-        /* 2048 Stilleri */
-        .g2048-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: #222; padding: 8px; border-radius: 12px; width: 240px; height: 240px; margin: 0 auto; }
-        .g2048-cell { background: #333; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold; color: #fff; }
-        .controls-2048 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; width: 150px; margin: 10px auto 0 auto; }
+        /* DİĞER İÇERİK STİLLERİ */
+        .project-item { display: flex; gap: 10px; margin-bottom: 10px; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; }
+        .project-icon { font-size: 20px; color: #00adb5; }
+        .blog-item { text-align: left; background: rgba(0,0,0,0.3); padding: 12px; border-radius: 10px; margin-bottom: 10px; border-left: 3px solid #00adb5; }
+        .blog-title { color: #fff; font-weight: 600; margin-bottom: 4px; }
+        .blog-text { color: #bbb; font-size: 13px; }
+
+        /* FOOTER */
+        footer { margin-top: 40px; font-size: 12px; color: #666; padding: 20px; }
+        footer span { color: #00adb5; }
     </style>
 </head>
 <body>
 
+    <div class="bg-particles"></div>
+
     <div class="card">
         <div class="logo-container">
-            <img src="https://raw.githubusercontent.com/kisiyeozel/kisiyeozel.github.io/main/IMG_7402.jpeg" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
+            <img src="IMG_7402.jpeg" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff&font-size=0.6'">
         </div>
-        <h1>Kişiye Özel</h1>
-        <p>Kişisel web sitemiz 1 Haziran'da açılıyor!</p>
-        <div class="links">
-            <a href="https://instagram.com/kisiyeozelorg" target="_blank">Instagram</a>
-            <a href="mailto:info@kisiyeozel.org">E-Posta</a>
-        </div>
-        <div class="countdown-title">Büyük Açılış</div>
+        <h1>kisiyeozel.org</h1>
+        <p class="subtitle">Bir Özel Deneyim.</p>
+        
+        <div class="countdown-title">Açılışa Kalan Süre</div>
         <div class="countdown">
             <div class="countdown-item"><span class="countdown-time" id="days">00</span><span class="countdown-label">Gün</span></div>
             <div class="countdown-item"><span class="countdown-time" id="hours">00</span><span class="countdown-label">Saat</span></div>
@@ -87,172 +146,134 @@
         </div>
     </div>
 
-    <div class="games-section">
-        <div class="game-tabs">
-            <button class="tab-btn active" onclick="switchGame('flappy')">🚀 Flappy</button>
-            <button class="tab-btn" onclick="switchGame('brick')">🧱 Tuğla</button>
-            <button class="tab-btn" onclick="switchGame('g2048')">🔢 2048</button>
-        </div>
+    <div class="discover-section">
+        <div class="discover-title">KEŞFEDİN</div>
         
+        <button class="tab-btn active" onclick="switchTab('flappy')">
+            <span class="tab-btn-icon">🎮</span> MİNİ OYUNLAR (Flappy Space)
+        </button>
+        
+        <button class="tab-btn" onclick="switchTab('projects')">
+            <span class="tab-btn-icon">💡</span> PROJELER
+        </button>
+        
+        <button class="tab-btn" onclick="switchTab('blog')">
+            <span class="tab-btn-icon">📝</span> BLOG
+        </button>
+
         <div id="game-flappy" class="game-container active">
-            <div id="flappy-score" style="font-size:16px; font-weight:bold; margin-bottom:5px; color:#00adb5;">Skor: 0</div>
-            <canvas id="flappyCanvas" width="280" height="320"></canvas>
-            <p style="font-size:11px; margin-top:5px; color:#666;">Zıplamak için haritaya TIKLA veya DOKUN</p>
+            <div id="flappy-score" style="font-size:16px; font-weight:bold; margin-bottom:8px; color:#00adb5; text-align:center;">Skor: 0</div>
+            <canvas id="flappyCanvas" width="300" height="340"></canvas>
+            <p style="font-size:12px; margin-top:8px; color:#666; text-align:center;">Ekrana DOKUNARAK uzay gemisini uçur.</p>
         </div>
 
-        <div id="game-brick" class="game-container">
-            <div id="brick-score" style="font-size:16px; font-weight:bold; margin-bottom:5px; color:#00adb5;">Skor: 0</div>
-            <canvas id="brickCanvas" width="280" height="320"></canvas>
-            <p style="font-size:11px; margin-top:5px; color:#666;">Alttaki çubuğu parmağınla/farenle kaydır</p>
+        <div id="content-projects" class="game-container">
+            <p style="color:#00adb5; font-weight:700; margin-bottom:15px;">Şu an geliştirme aşamasındayız.</p>
+            <div class="project-item"><span class="project-icon">🌐</span> Web Tasarım Çözümleri</div>
+            <div class="project-item"><span class="project-icon">📱</span> Mobil Uygulama Geliştirme</div>
+            <div class="project-item"><span class="project-icon">💬</span> Sosyal Medya Yönetimi</div>
         </div>
 
-        <div id="game-g2048" class="game-container">
-            <div id="score-2048" style="font-size:16px; font-weight:bold; margin-bottom:5px; color:#00adb5;">Skor: 0</div>
-            <div class="g2048-grid" id="board-2048"></div>
-            <div class="controls-2048">
-                <div></div><button class="game-btn" style="margin:0; padding:5px;" onclick="move2048('up')">▲</button><div></div>
-                <button class="game-btn" style="margin:0; padding:5px;" onclick="move2048('left')">◀</button>
-                <button class="game-btn" style="margin:0; padding:5px;" onclick="move2048('down')">▼</button>
-                <button class="game-btn" style="margin:0; padding:5px;" onclick="move2048('right')">▶</button>
+        <div id="content-blog" class="game-container">
+            <p style="color:#00adb5; font-weight:700; margin-bottom:15px;">İlk yazımız çok yakında!</p>
+            <div class="blog-item">
+                <div class="blog-title">İlk Blog Yazısı Başlığı</div>
+                <div class="blog-text">Bu yazı çok yakında sitenin açılışıyla beraber yayınlanacaktır...</div>
             </div>
         </div>
     </div>
 
+    <footer>
+        © 2026 <span>kisiyeozel.org</span> | Tüm Hakları Saklıdır.
+    </footer>
+
     <script>
-        // Sayaç (1 Haziran 2026)
+        // SAYAÇ (Hedef: 1 Haziran 2026)
         const targetDate = new Date("June 1, 2026 00:00:00").getTime();
-        setInterval(() => {
-            const difference = targetDate - new Date().getTime();
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
             if (difference < 0) return;
             document.getElementById('days').innerText = String(Math.floor(difference / 86400000)).padStart(2, '0');
             document.getElementById('hours').innerText = String(Math.floor((difference % 86400000) / 3600000)).padStart(2, '0');
             document.getElementById('minutes').innerText = String(Math.floor((difference % 3600000) / 60000)).padStart(2, '0');
             document.getElementById('seconds').innerText = String(Math.floor((difference % 60000) / 1000)).padStart(2, '0');
-        }, 1000);
+        }
+        setInterval(updateCountdown, 1000); updateCountdown();
 
-        let activeGame = 'flappy';
-        function switchGame(game) {
-            activeGame = game;
-            document.querySelectorAll('.game-container, .tab-btn').forEach(el => el.classList.remove('active'));
-            document.getElementById('game-' + game).classList.add('active');
+        // SEKMELER ARASI GEÇİŞ
+        let flappyInterval; // Global interval
+        function switchTab(tab) {
+            // Buton aktifliğini temizle
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             event.target.classList.add('active');
-            if(game === 'flappy') initFlappy();
-            if(game === 'brick') initBrick();
-            if(game === 'g2048') init2048();
+
+            // İçerikleri gizle
+            document.querySelectorAll('.game-container').forEach(cont => cont.classList.remove('active'));
+
+            // Flappy Bird interval'ini temizle (eğer oyun sekmesinden çıkılıyorsa)
+            if (flappyInterval) cancelAnimationFrame(flappyInterval);
+
+            // Seçilen içeriği göster
+            if (tab === 'flappy') {
+                document.getElementById('game-flappy').classList.add('active');
+                initFlappy(); // Oyunu başlat
+            } else if (tab === 'projects') {
+                document.getElementById('content-projects').classList.add('active');
+            } else if (tab === 'blog') {
+                document.getElementById('content-blog').classList.add('active');
+            }
         }
 
-        // --- 1. FLAPPY BIRD (UZAY MODU) ---
-        let fCanvas = document.getElementById("flappyCanvas"), fCtx = fCanvas.getContext("2d");
-        let birdY, birdV, pipes, fScore, fLoop;
-        function initFlappy(){
-            cancelAnimationFrame(fLoop); birdY = 150; birdV = 0; pipes = []; fScore = 0;
+        // OYUN: Flappy Space
+        const fCanvas = document.getElementById("flappyCanvas"), fCtx = fCanvas.getContext("2d");
+        let birdY, birdV, pipes, fScore, gameActive;
+        function initFlappy() {
+            if(flappyInterval) cancelAnimationFrame(flappyInterval);
+            birdY = 160; birdV = 0; pipes = []; fScore = 0; gameActive = true;
             document.getElementById("flappy-score").innerText = "Skor: 0";
-            fLoop = requestAnimationFrame(updateFlappy);
+            updateFlappy();
         }
-        function updateFlappy(){
-            if(activeGame !== 'flappy') return;
-            birdV += 0.25; birdY += birdV;
-            if(birdY > 310 || birdY < 0) return initFlappy();
-            
-            if(pipes.length === 0 || pipes[pipes.length-1].x < 140){
-                pipes.push({x: 280, top: Math.random()*120 + 30, passed: false});
+        function updateFlappy() {
+            if(!gameActive) return;
+            birdV += 0.3; birdY += birdV; // Yerçekimi
+            if(birdY > 324 || birdY < 0) gameActive = false; // Çarpışma: Zemin/Tavan
+
+            // Boru Oluşturma
+            if(pipes.length === 0 || pipes[pipes.length-1].x < 160){
+                pipes.push({x: 300, top: Math.random()*150 + 30, passed: false});
             }
             
-            fCtx.clearRect(0,0,280,320);
-            fCtx.fillStyle = "#00adb5"; 
-            fCtx.fillRect(40, birdY, 16, 16);
+            fCtx.clearRect(0,0,300,340);
+            fCtx.fillStyle = "#00adb5"; // Gemi rengi
+            fCtx.fillRect(40, birdY, 18, 18);
             
-            pipes.forEach((p, i) => {
-                p.x -= 2;
-                fCtx.fillStyle = "#393e46";
-                fCtx.fillRect(p.x, 0, 35, p.top);
-                fCtx.fillRect(p.x, p.top + 90, 35, 320);
+            pipes.forEach((p) => {
+                p.x -= 2.2; // Boru hızı
+                fCtx.fillStyle = "#222"; // Boru rengi
+                fCtx.fillRect(p.x, 0, 40, p.top);
+                fCtx.fillRect(p.x, p.top + 90, 40, 340); // Boşluk
                 
+                // Skor ve Çarpışma Kontrolü
                 if(!p.passed && p.x < 40){ p.passed = true; fScore++; document.getElementById("flappy-score").innerText = "Skor: " + fScore; }
-                if(p.x < 56 && p.x + 35 > 40 && (birdY < p.top || birdY + 16 > p.top + 90)) initFlappy();
+                if(p.x < 58 && p.x + 40 > 40 && (birdY < p.top || birdY + 18 > p.top + 90)) gameActive = false;
             });
             pipes = pipes.filter(p => p.x > -40);
-            fLoop = requestAnimationFrame(updateFlappy);
-        }
-        fCanvas.addEventListener('click', () => birdV = -5.5);
 
-        // --- 2. BRICK BREAKER ---
-        let bCanvas = document.getElementById("brickCanvas"), bCtx = bCanvas.getContext("2d");
-        let ball, paddle, bricks, bScore, bLoop;
-        function initBrick(){
-            cancelAnimationFrame(bLoop); bScore = 0; document.getElementById("brick-score").innerText = "Skor: 0";
-            ball = {x: 140, y: 200, dx: 2.5, dy: -2.5, r: 6}; paddle = {x: 110, w: 60, h: 10}; bricks = [];
-            for(let r=0; r<4; r++) for(let c=0; c<6; c++) bricks.push({x: c*42+15, y: r*15+30, w: 36, h: 10, v: true});
-            bLoop = requestAnimationFrame(updateBrick);
-        }
-        function updateBrick(){
-            if(activeGame !== 'brick') return;
-            ball.x += ball.dx; ball.y += ball.dy;
-            if(ball.x<0 || ball.x>280) ball.dx *= -1;
-            if(ball.y < 0) ball.dy *= -1;
-            if(ball.y > 320) return initBrick();
-            if(ball.y > 300 && ball.x > paddle.x && ball.x < paddle.x + paddle.w) ball.dy = -3;
-
-            bCtx.clearRect(0,0,280,320);
-            bCtx.fillStyle = "#fff"; bCtx.beginPath(); bCtx.arc(ball.x, ball.y, ball.r, 0, Math.PI*2); bCtx.fill();
-            bCtx.fillStyle = "#00adb5"; bCtx.fillRect(paddle.x, 305, paddle.w, paddle.h);
-
-            bricks.forEach(b => {
-                if(!b.v) return;
-                if(ball.x > b.x && ball.x < b.x+b.w && ball.y > b.y && ball.y < b.y+b.h){ b.v = false; ball.dy *= -1; bScore += 10; document.getElementById("brick-score").innerText = "Skor: " + bScore; }
-                bCtx.style = "#ff0055"; bCtx.fillRect(b.x, b.y, b.w, b.h);
-            });
-            bLoop = requestAnimationFrame(updateBrick);
-        }
-        bCanvas.addEventListener('mousemove', (e) => { let rect = bCanvas.getBoundingClientRect(); paddle.x = e.clientX - rect.left - paddle.w/2; });
-        bCanvas.addEventListener('touchmove', (e) => { let rect = bCanvas.getBoundingClientRect(); paddle.x = e.touches[0].clientX - rect.left - paddle.w/2; });
-
-        // --- 3. 2048 MINI ---
-        let grid2048 = [], s2048 = 0;
-        function init2048(){
-            grid2048 = Array(16).fill(0); s2048 = 0; document.getElementById("score-2048").innerText = "Skor: 0";
-            addTile(); addTile(); draw2048();
-        }
-        function addTile(){
-            let empties = grid2048.map((v,i) => v===0?i:null).filter(v => v!==null);
-            if(empties.length > 0) grid2048[empties[Math.floor(Math.random()*empties.length)]] = Math.random() > 0.1 ? 2 : 4;
-        }
-        function draw2048(){
-            let b = document.getElementById("board-2048"); b.innerHTML = "";
-            let colors = {2:"#393e46", 4:"#00adb5", 8:"#ff0055", 16:"#f39c12", 32:"#9b59b6", 64:"#2ecc71", 128:"#e74c3c", 256:"#1abc9c", 512:"#f1c40f", 1024:"#e67e22", 2048:"#34495e"};
-            grid2048.forEach(v => {
-                let c = document.createElement("div"); c.className = "g2048-cell"; c.innerText = v || "";
-                if(v) c.style.background = colors[v] || "#ff0055";
-                b.appendChild(c);
-            });
-            document.getElementById("score-2048").innerText = "Skor: " + s2048;
-        }
-        function move2048(dir){
-            let moved = false;
-            for(let i=0; i<4; i++){
-                let line = [];
-                for(let j=0; j<4; j++) {
-                    let idx = (dir==='up'||dir==='down') ? (j*4+i) : (i*4+j);
-                    if(grid2048[idx] !== 0) line.push(grid2048[idx]);
-                }
-                if(dir==='down' || dir==='right') line.reverse();
-                
-                let newLine = [];
-                for(let j=0; j<line.length; j++){
-                    if(line[j] === line[j+1]){ newLine.push(line[j]*2); s2048 += line[j]*2; j++; moved = true; }
-                    else { newLine.push(line[j]); }
-                }
-                while(newLine.length < 4) newLine.push(0);
-                if(dir==='down' || dir==='right') newLine.reverse();
-                
-                for(let j=0; j<4; j++) {
-                    let idx = (dir==='up'||dir==='down') ? (j*4+i) : (i*4+j);
-                    if(grid2048[idx] !== newLine[j]) { grid2048[idx] = newLine[j]; moved = true; }
-                }
+            if(gameActive) {
+                flappyInterval = requestAnimationFrame(updateFlappy);
+            } else {
+                fCtx.fillStyle = "rgba(0,0,0,0.6)"; fCtx.fillRect(0,0,300,340);
+                fCtx.fillStyle = "#ff0055"; fCtx.font = "bold 22px Arial"; fCtx.fillText("Oyun Bitti!", 90, 150);
+                fCtx.fillStyle = "#fff"; fCtx.font = "14px Arial"; fCtx.fillText("Yeniden Başlamak İçin Dokun", 65, 180);
+                cancelAnimationFrame(flappyInterval);
             }
-            if(moved) { addTile(); draw2048(); }
         }
+        fCanvas.addEventListener('click', () => { 
+            if(gameActive) { birdV = -6; } else { initFlappy(); }
+        });
 
+        // İlk kurulum
         initFlappy();
     </script>
 </body>
