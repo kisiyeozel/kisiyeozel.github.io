@@ -70,7 +70,7 @@
 
     <div class="card">
         <div class="logo-container">
-            <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
+            <img src="https://raw.githubusercontent.com/kisiyeozel/kisiyeozel.github.io/main/IMG_7402.jpeg" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
         </div>
         <h1>Kişiye Özel</h1>
         <p>Kişisel web sitemiz 1 Haziran'da açılıyor!</p>
@@ -159,7 +159,7 @@
             }
             
             fCtx.clearRect(0,0,280,320);
-            fCtx.fillStyle = "#00adb5"; // Gemi rengi (Neon cyan)
+            fCtx.fillStyle = "#00adb5"; 
             fCtx.fillRect(40, birdY, 16, 16);
             
             pipes.forEach((p, i) => {
@@ -228,7 +228,6 @@
             document.getElementById("score-2048").innerText = "Skor: " + s2048;
         }
         function move2048(dir){
-            // Basit row/col mantığıyla kaydırma işlemi
             let moved = false;
             for(let i=0; i<4; i++){
                 let line = [];
@@ -254,7 +253,6 @@
             if(moved) { addTile(); draw2048(); }
         }
 
-        // İlk açılış
         initFlappy();
     </script>
 </body>
