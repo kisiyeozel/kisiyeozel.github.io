@@ -5,9 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kişiye Özel</title>
     <style>
+        * { box-sizing: border-box; }
         body { 
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; 
-            background: #121212; 
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%); 
             color: #fff; 
             margin: 0; 
             display: flex; 
@@ -17,84 +18,109 @@
             text-align: center; 
         }
         .card { 
-            background: #1e1e1e; 
-            padding: 30px; 
-            border-radius: 15px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
-            max-width: 400px; 
+            background: rgba(30, 30, 50, 0.65); 
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 40px 30px; 
+            border-radius: 24px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(0, 173, 181, 0.1); 
+            max-width: 420px; 
             width: 90%; 
-            border: 1px solid #333; 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
             margin: 20px auto;
         }
+        /* Logo Alanı Düzenlemesi */
+        .logo-container {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 20px auto;
+            position: relative;
+        }
         .logo {
-            width: 100px;
-            height: 100px;
+            width: 100%;
+            height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #00adb5;
-            margin-bottom: 15px;
+            border: 2px solid #00adb5;
+            box-shadow: 0 0 15px rgba(0, 173, 181, 0.4);
         }
-        h1 { margin: 0 0 10px 0; font-size: 26px; color: #00adb5; }
-        p { color: #eeeeee; font-size: 15px; margin-bottom: 20px; }
+        h1 { margin: 0 0 8px 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(45deg, #fff, #00adb5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: #b3b3b3; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
+        
         .links a { 
-            display: block; 
-            background: #393e46; 
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.05); 
             color: #fff; 
             text-decoration: none; 
-            padding: 12px; 
-            margin: 10px 0; 
-            border-radius: 8px; 
-            font-weight: bold; 
-            transition: 0.3s; 
+            padding: 14px; 
+            margin: 12px 0; 
+            border-radius: 12px; 
+            font-weight: 600; 
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease; 
         }
-        .links a:hover { background: #00adb5; }
+        .links a:hover { 
+            background: #00adb5; 
+            box-shadow: 0 0 20px rgba(0, 173, 181, 0.4);
+            transform: translateY(-2px);
+            border-color: #00adb5;
+        }
         
-        /* Geri Sayım Sayacı Tasarımı */
+        /* Geri Sayım Sayacı */
         .countdown-title {
-            margin-top: 25px;
-            font-size: 14px;
-            color: #888;
+            margin-top: 35px;
+            font-size: 12px;
+            color: #00adb5;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            font-weight: 700;
         }
         .countdown {
             display: flex;
-            justify-content: space-around;
-            margin-top: 10px;
-            background: #151515;
+            justify-content: space-between;
+            margin-top: 12px;
+            background: rgba(0, 0, 0, 0.3);
             padding: 15px;
-            border-radius: 10px;
-            border: 1px solid #222;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.03);
         }
         .countdown-item {
+            flex: 1;
             display: flex;
             flex-direction: column;
         }
         .countdown-time {
-            font-size: 20px;
-            font-weight: bold;
-            color: #00adb5;
+            font-size: 22px;
+            font-weight: 700;
+            color: #fff;
+            font-variant-numeric: tabular-nums;
         }
         .countdown-label {
-            font-size: 11px;
-            color: #aaa;
-            margin-top: 3px;
+            font-size: 10px;
+            color: #777;
+            margin-top: 4px;
+            text-transform: uppercase;
         }
     </style>
 </head>
 <body>
     <div class="card">
-        <img src="https://hizliresim.com/r6775gw" alt="Logo" class="logo">
+        <div class="logo-container">
+            <img src="https://i.hizliresim.com/r6775gw.png" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
+        </div>
         
         <h1>Kişiye Özel</h1>
-        <p>Kişisel web siteme hoş geldiniz. Çok yakında buradayız!</p>
+        <p>Kişisel web sitemiz çok yakında yeni yüzüyle yayında olacak. Takipte kalın!</p>
         
         <div class="links">
-            <a href="https://instagram.com/kisiyeozelorg" target="_blank">Instagram</a>
-            <a href="mailto:https://hizliresim.com/r6775gw">E-Posta Gönder</a>
+            <a href="https://instagram.com/kisiyeozelorg" target="_blank">Instagram'da Takip Et</a>
+            <a href="mailto:info@kisiyeozel.org">E-Posta Gönder</a>
         </div>
 
-        <div class="countdown-title">Büyük Açılışa Kalan Süre</div>
+        <div class="countdown-title">Büyük Açılış</div>
         <div class="countdown">
             <div class="countdown-item">
                 <span class="countdown-time" id="days">00</span>
@@ -116,16 +142,15 @@
     </div>
 
     <script>
-        // Şu andan tam 1 ay sonrasını (30 gün) hedef tarih olarak ayarla
-        const targetDate = new Date();
-        targetDate.setDate(targetDate.getDate() + 30);
+        // Hedef Tarih: 1 Haziran 2026
+        const targetDate = new Date("June 1, 2026 00:00:00").getTime();
 
         function updateCountdown() {
             const now = new Date().getTime();
             const difference = targetDate - now;
 
             if (difference < 0) {
-                document.querySelector('.countdown').innerHTML = "<span style='color:#00adb5; font-weight:bold; width:100%;'>Sitemiz Yayında!</span>";
+                document.querySelector('.countdown').innerHTML = "<span style='color:#00adb5; font-weight:bold; width:100%; padding: 5px 0;'>Sitemiz Yayında!</span>";
                 clearInterval(interval);
                 return;
             }
