@@ -7,11 +7,13 @@
     <style>
         * { box-sizing: border-box; }
         body { 
-            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+            font-family: '-apple-system', BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
             background: radial-gradient(circle at center, #1a1a2e 0%, #0f0f1a 100%); 
             color: #fff; 
             margin: 0; 
+            padding: 20px 0;
             display: flex; 
+            flex-direction: column;
             justify-content: center; 
             align-items: center; 
             min-height: 100vh; 
@@ -21,153 +23,168 @@
             background: rgba(30, 30, 50, 0.65); 
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
-            padding: 40px 30px; 
+            padding: 30px 20px; 
             border-radius: 24px; 
             box-shadow: 0 20px 50px rgba(0,0,0,0.6), 0 0 40px rgba(0, 173, 181, 0.1); 
             max-width: 420px; 
             width: 90%; 
             border: 1px solid rgba(255, 255, 255, 0.08); 
-            margin: 20px auto;
+            margin-bottom: 20px;
         }
-        /* Logo Alanı Düzenlemesi */
-        .logo-container {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 20px auto;
-            position: relative;
-        }
-        .logo {
-            width: 100%;
-            height: 100%;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 2px solid #00adb5;
-            box-shadow: 0 0 15px rgba(0, 173, 181, 0.4);
-        }
-        h1 { margin: 0 0 8px 0; font-size: 28px; font-weight: 700; letter-spacing: -0.5px; background: linear-gradient(45deg, #fff, #00adb5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p { color: #b3b3b3; font-size: 15px; margin-bottom: 25px; line-height: 1.5; }
+        .logo-container { width: 110px; height: 110px; margin: 0 auto 15px auto; }
+        .logo { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #00adb5; box-shadow: 0 0 15px rgba(0, 173, 181, 0.4); }
+        h1 { margin: 0 0 8px 0; font-size: 26px; font-weight: 700; background: linear-gradient(45deg, #fff, #00adb5); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p { color: #b3b3b3; font-size: 14px; margin-bottom: 20px; }
+        .links a { display: flex; align-items: center; justify-content: center; background: rgba(255, 255, 255, 0.05); color: #fff; text-decoration: none; padding: 12px; margin: 10px 0; border-radius: 12px; font-weight: 600; font-size: 14px; border: 1px solid rgba(255, 255, 255, 0.05); transition: all 0.3s; }
+        .links a:hover { background: #00adb5; box-shadow: 0 0 20px rgba(0, 173, 181, 0.4); transform: translateY(-2px); border-color: #00adb5; }
         
-        .links a { 
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(255, 255, 255, 0.05); 
-            color: #fff; 
-            text-decoration: none; 
-            padding: 14px; 
-            margin: 12px 0; 
-            border-radius: 12px; 
-            font-weight: 600; 
-            letter-spacing: 0.5px;
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.3s ease; 
-        }
-        .links a:hover { 
-            background: #00adb5; 
-            box-shadow: 0 0 20px rgba(0, 173, 181, 0.4);
-            transform: translateY(-2px);
-            border-color: #00adb5;
-        }
+        .countdown-title { margin-top: 25px; font-size: 11px; color: #00adb5; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .countdown { display: flex; justify-content: space-between; margin-top: 10px; background: rgba(0, 0, 0, 0.3); padding: 12px; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.03); }
+        .countdown-item { flex: 1; display: flex; flex-direction: column; }
+        .countdown-time { font-size: 18px; font-weight: 700; color: #fff; }
+        .countdown-label { font-size: 9px; color: #777; margin-top: 2px; }
+
+        /* Oyunlar Bölümü */
+        .games-section { max-width: 420px; width: 90%; }
+        .game-tabs { display: flex; gap: 5px; margin-bottom: 10px; }
+        .tab-btn { flex: 1; background: #222831; border: 1px solid #393e46; color: #aaa; padding: 10px 5px; border-radius: 8px; font-weight: 600; font-size: 12px; cursor: pointer; transition: 0.3s; }
+        .tab-btn.active { background: #00adb5; color: #fff; border-color: #00adb5; box-shadow: 0 0 10px rgba(0,173,181,0.3); }
+        .game-container { background: #1e1e1e; border: 1px solid #333; border-radius: 16px; padding: 15px; display: none; min-height: 260px; position: relative; }
+        .game-container.active { display: block; }
         
-        /* Geri Sayım Sayacı */
-        .countdown-title {
-            margin-top: 35px;
-            font-size: 12px;
-            color: #00adb5;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            font-weight: 700;
-        }
-        .countdown {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 12px;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 15px;
-            border-radius: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.03);
-        }
-        .countdown-item {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        .countdown-time {
-            font-size: 22px;
-            font-weight: 700;
-            color: #fff;
-            font-variant-numeric: tabular-nums;
-        }
-        .countdown-label {
-            font-size: 10px;
-            color: #777;
-            margin-top: 4px;
-            text-transform: uppercase;
-        }
+        /* Oyun Tasarımları */
+        canvas { background: #111; display: block; margin: 0 auto; border-radius: 8px; max-width: 100%; }
+        .tictactoe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 5px; max-width: 200px; margin: 0 auto; }
+        .cell { width: 60px; height: 60px; background: #2c3e50; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 24px; font-weight: bold; cursor: pointer; }
+        .memory-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 5px; max-width: 240px; margin: 0 auto; }
+        .card-mem { height: 50px; background: #34495e; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 20px; cursor: pointer; color: transparent; user-select: none; }
+        .card-mem.flipped { color: #fff; background: #00adb5; }
+        .game-btn { background: #00adb5; border: none; color: white; padding: 6px 12px; border-radius: 6px; margin-top: 10px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
+
     <div class="card">
         <div class="logo-container">
-            <img src="https://i.hizliresim.com/r6775gw.png" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
+            <img src="logo.png" alt="Logo" class="logo" onerror="this.src='https://ui-avatars.com/api/?name=KO&background=00adb5&color=fff'">
         </div>
-        
         <h1>Kişiye Özel</h1>
-        <p>Kişisel web sitemiz çok yakında yeni yüzüyle yayında olacak. Takipte kalın!</p>
-        
+        <p>Kişisel web sitemiz 1 Haziran'da açılıyor!</p>
         <div class="links">
             <a href="https://instagram.com/kisiyeozelorg" target="_blank">Instagram'da Takip Et</a>
             <a href="mailto:info@kisiyeozel.org">E-Posta Gönder</a>
         </div>
-
         <div class="countdown-title">Büyük Açılış</div>
         <div class="countdown">
-            <div class="countdown-item">
-                <span class="countdown-time" id="days">00</span>
-                <span class="countdown-label">Gün</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time" id="hours">00</span>
-                <span class="countdown-label">Saat</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time" id="minutes">00</span>
-                <span class="countdown-label">Dk</span>
-            </div>
-            <div class="countdown-item">
-                <span class="countdown-time" id="seconds">00</span>
-                <span class="countdown-label">Sn</span>
-            </div>
+            <div class="countdown-item"><span class="countdown-time" id="days">00</span><span class="countdown-label">Gün</span></div>
+            <div class="countdown-item"><span class="countdown-time" id="hours">00</span><span class="countdown-label">Saat</span></div>
+            <div class="countdown-item"><span class="countdown-time" id="minutes">00</span><span class="countdown-label">Dk</span></div>
+            <div class="countdown-item"><span class="countdown-time" id="seconds">00</span><span class="countdown-label">Sn</span></div>
+        </div>
+    </div>
+
+    <div class="games-section">
+        <div class="game-tabs">
+            <button class="tab-btn active" onclick="switchGame('snake')">🐍 Yılan</button>
+            <button class="tab-btn" onclick="switchGame('ttt')">❌ Sos</button>
+            <button class="tab-btn" onclick="switchGame('memory')">🧠 Hafıza</button>
+        </div>
+        
+        <div id="game-snake" class="game-container active">
+            <canvas id="snakeCanvas" width="200" height="200"></canvas>
+            <button class="game-btn" onclick="initSnake()">Yeniden Başlat</button>
+            <p style="font-size:11px; margin-top:5px; color:#666;">Yönlendirmek için ekrana dokun/tıkla (Saat yönü)</p>
+        </div>
+
+        <div id="game-ttt" class="game-container">
+            <div class="tictactoe-grid" id="ttt-board"></div>
+            <button class="game-btn" onclick="initTTT()">Sıfırla</button>
+        </div>
+
+        <div id="game-memory" class="game-container">
+            <div class="memory-grid" id="memory-board"></div>
+            <button class="game-btn" onclick="initMemory()">Yeniden Dağıt</button>
         </div>
     </div>
 
     <script>
-        // Hedef Tarih: 1 Haziran 2026
+        // Sayaç Kodu (1 Haziran 2026)
         const targetDate = new Date("June 1, 2026 00:00:00").getTime();
+        setInterval(() => {
+            const difference = targetDate - new Date().getTime();
+            if (difference < 0) return;
+            document.getElementById('days').innerText = String(Math.floor(difference / 86400000)).padStart(2, '0');
+            document.getElementById('hours').innerText = String(Math.floor((difference % 86400000) / 3600000)).padStart(2, '0');
+            document.getElementById('minutes').innerText = String(Math.floor((difference % 3600000) / 60000)).padStart(2, '0');
+            document.getElementById('seconds').innerText = String(Math.floor((difference % 60000) / 1000)).padStart(2, '0');
+        }, 1000);
 
-        function updateCountdown() {
-            const now = new Date().getTime();
-            const difference = targetDate - now;
-
-            if (difference < 0) {
-                document.querySelector('.countdown').innerHTML = "<span style='color:#00adb5; font-weight:bold; width:100%; padding: 5px 0;'>Sitemiz Yayında!</span>";
-                clearInterval(interval);
-                return;
-            }
-
-            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
-            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-            const s = Math.floor((difference % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = d < 10 ? '0' + d : d;
-            document.getElementById('hours').innerText = h < 10 ? '0' + h : h;
-            document.getElementById('minutes').innerText = m < 10 ? '0' + m : m;
-            document.getElementById('seconds').innerText = s < 10 ? '0' + s : s;
+        // Sekme Değiştirici
+        function switchGame(game) {
+            document.querySelectorAll('.game-container, .tab-btn').forEach(el => el.classList.remove('active'));
+            document.getElementById('game-' + game).classList.add('active');
+            event.target.classList.add('active');
+            if(game === 'snake') initSnake();
+            if(game === 'ttt') initTTT();
+            if(game === 'memory') initMemory();
         }
 
-        const interval = setInterval(updateCountdown, 1000);
-        updateCountdown();
+        // --- 1. YILAN OYUNU ---
+        let canvas = document.getElementById("snakeCanvas"), ctx = canvas.getContext("2d");
+        let snake, food, dx, dy, snakeInterval;
+        function initSnake(){
+            clearInterval(snakeInterval);
+            snake = [{x: 100, y: 100}]; food = {x: 40, y: 40}; dx = 20; dy = 0;
+            snakeInterval = setInterval(gameLoop, 200);
+        }
+        function gameLoop() {
+            let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            if(head.x<0 || head.x>=200 || head.y<0 || head.y>=200) return initSnake();
+            snake.unshift(head);
+            if(head.x === food.x && head.y === food.y) {
+                food = {x: Math.floor(Math.random()*10)*20, y: Math.floor(Math.random()*10)*20};
+            } else { snake.pop(); }
+            ctx.clearRect(0,0,200,200); ctx.fillStyle = "#ff0055"; ctx.fillRect(food.x, food.y, 18, 18);
+            ctx.fillStyle = "#00adb5"; snake.forEach(p => ctx.fillRect(p.x, p.y, 18, 18));
+        }
+        canvas.addEventListener('click', () => { // Mobil için kolay dönüş modu (saat yönü)
+            if(dx === 20) { dx = 0; dy = 20; } else if(dy === 20) { dx = -20; dy = 0; } else if(dx === -20) { dx = 0; dy = -20; } else { dx = 20; dy = 0; }
+        });
+
+        // --- 2. TIC-TAC-TOE ---
+        let tttBoard = ["","","","","","","","",""], turn = "X";
+        function initTTT() {
+            let b = document.getElementById("ttt-board"); b.innerHTML = ""; tttBoard = ["","","","","","","","",""]; turn = "X";
+            for(let i=0; i<9; i++) {
+                let c = document.createElement("div"); c.className = "cell"; c.onclick = () => {
+                    if(tttBoard[i] === "") { tttBoard[i] = turn; c.innerText = turn; turn = turn === "X" ? "O" : "X"; }
+                };
+                b.appendChild(c);
+            }
+        }
+
+        // --- 3. HAFIZA OYUNU ---
+        let icons = ["🍎","🍎","🍌","🍌","🍇","🍇","🍉","🍉","🍒","🍒","🥝","🥝","🥑","🥑","🌶️","🌶️"], firstCard = null, secondCard = null;
+        function initMemory() {
+            let b = document.getElementById("memory-board"); b.innerHTML = ""; firstCard = null; secondCard = null;
+            icons.sort(() => Math.random() - 0.5);
+            icons.forEach((icon, idx) => {
+                let c = document.createElement("div"); c.className = "card-mem"; c.innerText = icon;
+                c.onclick = () => {
+                    if(c.classList.contains('flipped') || secondCard) return;
+                    c.classList.add('flipped');
+                    if(!firstCard) { firstCard = c; } else {
+                        secondCard = c;
+                        if(firstCard.innerText === secondCard.innerText) { firstCard = null; secondCard = null; }
+                        else { setTimeout(() => { firstCard.classList.remove('flipped'); secondCard.classList.remove('flipped'); firstCard = null; secondCard = null; }, 800); }
+                    }
+                };
+                b.appendChild(c);
+            });
+        }
+
+        // İlk açılış kurulumu
+        initSnake();
     </script>
 </body>
 </html>
