@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
@@ -22,155 +21,153 @@ body::after{content:'';position:fixed;inset:0;background-image:url("data:image/s
 
 /* HERO */
 .hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:70px 20px 50px;position:relative}
-.live-tag{position:absolute;top:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:9px;font-size:.58rem;letter-spacing:.28em;color:var(–txt2);text-transform:uppercase;white-space:nowrap}
-.live-dot{width:7px;height:7px;border-radius:50%;background:var(–n);box-shadow:0 0 10px var(–n);animation:blink 1.3s ease-in-out infinite}
+.live-tag{position:absolute;top:26px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:9px;font-size:.58rem;letter-spacing:.28em;color:var(--txt2);text-transform:uppercase;white-space:nowrap}
+.live-dot{width:7px;height:7px;border-radius:50%;background:var(--n);box-shadow:0 0 10px var(--n);animation:blink 1.3s ease-in-out infinite}
 @keyframes blink{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.2;transform:scale(.7)}}
 
 .logo-wrap{margin-bottom:38px;position:relative;display:inline-block}
 .logo-ring{
-width:136px;height:136px;border-radius:50%;
-border:1.5px solid var(–n);
-display:flex;align-items:center;justify-content:center;
-background:radial-gradient(circle at 38% 32%,rgba(var(–nr),.14),transparent 65%);
-box-shadow:0 0 0 8px rgba(var(–nr),.04),0 0 50px rgba(var(–nr),.3),inset 0 0 30px rgba(var(–nr),.08);
-position:relative;overflow:hidden;
+  width:136px;height:136px;border-radius:50%;
+  border:1.5px solid var(--n);
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 38% 32%,rgba(var(--nr),.14),transparent 65%);
+  box-shadow:0 0 0 8px rgba(var(--nr),.04),0 0 50px rgba(var(--nr),.3),inset 0 0 30px rgba(var(--nr),.08);
+  position:relative;overflow:hidden;
 }
-.logo-ring::before,.logo-ring::after{content:’’;position:absolute;border-radius:50%;border:1px solid rgba(var(–nr),.2);animation:rppl 3.5s ease-out infinite}
+.logo-ring::before,.logo-ring::after{content:'';position:absolute;border-radius:50%;border:1px solid rgba(var(--nr),.2);animation:rppl 3.5s ease-out infinite}
 .logo-ring::before{width:160px;height:160px;animation-delay:0s}
 .logo-ring::after{width:188px;height:188px;animation-delay:1.2s}
 @keyframes rppl{0%{opacity:.5;transform:scale(1)}100%{opacity:0;transform:scale(1.1)}}
-.logo-ring img{width:90%;height:90%;border-radius:50%;object-fit:contain;display:block;filter:drop-shadow(0 0 10px rgba(var(–nr),.35))}
+.logo-ring img{width:90%;height:90%;border-radius:50%;object-fit:contain;display:block;filter:drop-shadow(0 0 10px rgba(var(--nr),.35))}
 
 /* rotating dashes ring */
-.logo-orbit{position:absolute;width:164px;height:164px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(var(–nr),.25);animation:orbitSpin 18s linear infinite}
+.logo-orbit{position:absolute;width:164px;height:164px;top:50%;left:50%;transform:translate(-50%,-50%);border-radius:50%;border:1px dashed rgba(var(--nr),.25);animation:orbitSpin 18s linear infinite}
 @keyframes orbitSpin{to{transform:translate(-50%,-50%) rotate(360deg)}}
 
 .site-name{
-font-family:‘Syne’,sans-serif;font-weight:800;
-font-size:clamp(2rem,6.5vw,4.2rem);letter-spacing:-.03em;line-height:1;margin-bottom:12px;
-background:linear-gradient(135deg,#fff 0%,var(–n) 55%,#0af 100%);
--webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-filter:drop-shadow(0 0 28px rgba(var(–nr),.55));
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2rem,6.5vw,4.2rem);letter-spacing:-.03em;line-height:1;margin-bottom:12px;
+  background:linear-gradient(135deg,#fff 0%,var(--n) 55%,#0af 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 28px rgba(var(--nr),.55));
 }
-.site-sub{font-size:.65rem;letter-spacing:.38em;text-transform:uppercase;color:var(–txt2);margin-bottom:52px}
+.site-sub{font-size:.65rem;letter-spacing:.38em;text-transform:uppercase;color:var(--txt2);margin-bottom:52px}
 
 /* COUNTDOWN */
 .cd-wrap{display:flex;align-items:center;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:56px}
 .cd-cell{
-background:rgba(var(–nr),.04);border:1px solid rgba(var(–nr),.2);border-radius:14px;
-padding:18px 22px 12px;min-width:82px;text-align:center;
-backdrop-filter:blur(14px);position:relative;overflow:hidden;
+  background:rgba(var(--nr),.04);border:1px solid rgba(var(--nr),.2);border-radius:14px;
+  padding:18px 22px 12px;min-width:82px;text-align:center;
+  backdrop-filter:blur(14px);position:relative;overflow:hidden;
 }
-.cd-cell::before{content:’’;position:absolute;top:0;left:-100%;right:0;height:1px;background:linear-gradient(90deg,transparent,var(–n),transparent);animation:scanln 2.8s linear infinite}
+.cd-cell::before{content:'';position:absolute;top:0;left:-100%;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--n),transparent);animation:scanln 2.8s linear infinite}
 @keyframes scanln{to{left:100%}}
-.cd-n{font-family:‘Syne’,sans-serif;font-weight:800;font-size:clamp(1.9rem,5vw,2.9rem);color:var(–n);text-shadow:0 0 22px rgba(var(–nr),.95);line-height:1;display:block;transition:transform .12s}
+.cd-n{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.9rem,5vw,2.9rem);color:var(--n);text-shadow:0 0 22px rgba(var(--nr),.95);line-height:1;display:block;transition:transform .12s}
 .cd-n.pop{animation:npop .18s ease}
-@keyframes npop{50%{transform:scale(1.22);text-shadow:0 0 40px rgba(var(–nr),1)}}
-.cd-u{font-size:.5rem;letter-spacing:.24em;color:var(–txt2);text-transform:uppercase;margin-top:7px;display:block}
-.cd-sep{font-family:‘Syne’,sans-serif;font-weight:800;font-size:2.2rem;color:rgba(var(–nr),.3);align-self:flex-end;padding-bottom:20px;animation:blink 1.3s ease-in-out infinite}
+@keyframes npop{50%{transform:scale(1.22);text-shadow:0 0 40px rgba(var(--nr),1)}}
+.cd-u{font-size:.5rem;letter-spacing:.24em;color:var(--txt2);text-transform:uppercase;margin-top:7px;display:block}
+.cd-sep{font-family:'Syne',sans-serif;font-weight:800;font-size:2.2rem;color:rgba(var(--nr),.3);align-self:flex-end;padding-bottom:20px;animation:blink 1.3s ease-in-out infinite}
 
-.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;font-size:.52rem;letter-spacing:.3em;color:var(–txt2)}
-.scroll-ln{width:1px;height:38px;background:linear-gradient(to bottom,var(–n),transparent);animation:sla 2s ease-in-out infinite}
+.scroll-hint{position:absolute;bottom:30px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:7px;font-size:.52rem;letter-spacing:.3em;color:var(--txt2)}
+.scroll-ln{width:1px;height:38px;background:linear-gradient(to bottom,var(--n),transparent);animation:sla 2s ease-in-out infinite}
 @keyframes sla{0%,100%{opacity:.2;transform:scaleY(.5) translateY(-8px)}50%{opacity:1;transform:scaleY(1) translateY(0)}}
 
 /* NAV */
-nav{position:sticky;top:0;z-index:50;background:rgba(2,8,16,.88);backdrop-filter:blur(22px);border-bottom:1px solid rgba(var(–nr),.1);padding:0 20px}
-.nav-inner{max-width:var(–max);margin:0 auto;display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none}
+nav{position:sticky;top:0;z-index:50;background:rgba(2,8,16,.88);backdrop-filter:blur(22px);border-bottom:1px solid rgba(var(--nr),.1);padding:0 20px}
+.nav-inner{max-width:var(--max);margin:0 auto;display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none}
 .nav-inner::-webkit-scrollbar{display:none}
-.nb{font-family:‘JetBrains Mono’,monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:14px 22px;background:none;border:none;color:var(–txt2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s,border-color .2s}
-.nb.on{color:var(–n);border-bottom-color:var(–n);text-shadow:0 0 10px rgba(var(–nr),.6)}
+.nb{font-family:'JetBrains Mono',monospace;font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:14px 22px;background:none;border:none;color:var(--txt2);cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;white-space:nowrap;transition:color .2s,border-color .2s}
+.nb.on{color:var(--n);border-bottom-color:var(--n);text-shadow:0 0 10px rgba(var(--nr),.6)}
 .nav-right{margin-left:auto;display:flex;align-items:center}
-.tob{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;padding:7px 14px;background:rgba(var(–nr),.07);border:1px solid rgba(var(–nr),.25);border-radius:6px;color:var(–n);cursor:pointer;transition:all .2s;white-space:nowrap}
-.tob:hover{background:rgba(var(–nr),.16);box-shadow:0 0 14px rgba(var(–nr),.3)}
+.tob{font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;padding:7px 14px;background:rgba(var(--nr),.07);border:1px solid rgba(var(--nr),.25);border-radius:6px;color:var(--n);cursor:pointer;transition:all .2s;white-space:nowrap}
+.tob:hover{background:rgba(var(--nr),.16);box-shadow:0 0 14px rgba(var(--nr),.3)}
 
 /* SECTIONS */
 .sec{display:none;padding:48px 0 80px}
 .sec.on{display:block}
-.sec-h{font-family:‘Syne’,sans-serif;font-weight:800;font-size:clamp(1.4rem,4vw,2.2rem);margin-bottom:6px}
-.sec-h em{color:var(–n);text-shadow:0 0 18px rgba(var(–nr),.5);font-style:normal}
-.sec-d{font-size:.72rem;color:var(–txt2);margin-bottom:30px;letter-spacing:.05em;line-height:1.8}
+.sec-h{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.4rem,4vw,2.2rem);margin-bottom:6px}
+.sec-h em{color:var(--n);text-shadow:0 0 18px rgba(var(--nr),.5);font-style:normal}
+.sec-d{font-size:.72rem;color:var(--txt2);margin-bottom:30px;letter-spacing:.05em;line-height:1.8}
 
 /* GAME SELECTOR */
 .gsel{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:22px}
-.gsb{font-family:‘JetBrains Mono’,monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 18px;background:rgba(var(–nr),.05);border:1px solid rgba(var(–nr),.18);border-radius:8px;color:var(–txt2);cursor:pointer;transition:all .2s}
-.gsb.on{color:var(–n);border-color:var(–n);background:rgba(var(–nr),.12);box-shadow:0 0 16px rgba(var(–nr),.2)}
+.gsb{font-family:'JetBrains Mono',monospace;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 18px;background:rgba(var(--nr),.05);border:1px solid rgba(var(--nr),.18);border-radius:8px;color:var(--txt2);cursor:pointer;transition:all .2s}
+.gsb.on{color:var(--n);border-color:var(--n);background:rgba(var(--nr),.12);box-shadow:0 0 16px rgba(var(--nr),.2)}
 
 .ga{display:none}
 .ga.on{display:block}
 
 /* GAME SHELL */
-.gs{background:rgba(var(–nr),.03);border:1px solid rgba(var(–nr),.15);border-radius:18px;padding:24px;backdrop-filter:blur(18px);position:relative;overflow:hidden}
-.gs::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(–n),transparent);opacity:.55}
+.gs{background:rgba(var(--nr),.03);border:1px solid rgba(var(--nr),.15);border-radius:18px;padding:24px;backdrop-filter:blur(18px);position:relative;overflow:hidden}
+.gs::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--n),transparent);opacity:.55}
 .ghd{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;flex-wrap:wrap;gap:10px}
-.gtitle{font-family:‘Syne’,sans-serif;font-weight:800;font-size:1.25rem;color:var(–n);text-shadow:0 0 16px rgba(var(–nr),.6)}
+.gtitle{font-family:'Syne',sans-serif;font-weight:800;font-size:1.25rem;color:var(--n);text-shadow:0 0 16px rgba(var(--nr),.6)}
 .sb{display:flex;gap:8px}
-.sco{background:rgba(var(–nr),.06);border:1px solid rgba(var(–nr),.2);border-radius:8px;padding:6px 14px;text-align:center}
-.sco-l{font-size:.48rem;letter-spacing:.18em;color:var(–txt2);text-transform:uppercase;display:block}
-.sco-v{font-family:‘Syne’,sans-serif;font-weight:700;font-size:1rem;color:var(–n)}
+.sco{background:rgba(var(--nr),.06);border:1px solid rgba(var(--nr),.2);border-radius:8px;padding:6px 14px;text-align:center}
+.sco-l{font-size:.48rem;letter-spacing:.18em;color:var(--txt2);text-transform:uppercase;display:block}
+.sco-v{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;color:var(--n)}
 
-canvas.gc{display:block;margin:0 auto;border-radius:10px;border:1px solid rgba(var(–nr),.2);box-shadow:0 0 40px rgba(var(–nr),.1);max-width:100%}
+canvas.gc{display:block;margin:0 auto;border-radius:10px;border:1px solid rgba(var(--nr),.2);box-shadow:0 0 40px rgba(var(--nr),.1);max-width:100%}
 
-.stbar{text-align:center;font-size:.6rem;letter-spacing:.14em;color:var(–txt2);margin-top:10px;min-height:20px}
-.stbtn{display:block;margin:12px auto 0;font-family:‘Syne’,sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:11px 28px;background:rgba(var(–nr),.1);border:1px solid var(–n);border-radius:10px;color:var(–n);cursor:pointer;transition:all .2s}
-.stbtn:hover{background:rgba(var(–nr),.22);box-shadow:0 0 22px rgba(var(–nr),.4)}
+.stbar{text-align:center;font-size:.6rem;letter-spacing:.14em;color:var(--txt2);margin-top:10px;min-height:20px}
+.stbtn{display:block;margin:12px auto 0;font-family:'Syne',sans-serif;font-weight:700;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;padding:11px 28px;background:rgba(var(--nr),.1);border:1px solid var(--n);border-radius:10px;color:var(--n);cursor:pointer;transition:all .2s}
+.stbtn:hover{background:rgba(var(--nr),.22);box-shadow:0 0 22px rgba(var(--nr),.4)}
 .dpad{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:15px}
 .dpad-r{display:flex;gap:5px}
-.dp{width:54px;height:54px;background:rgba(var(–nr),.07);border:1px solid rgba(var(–nr),.22);border-radius:10px;color:var(–n);font-size:1.15rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .14s;-webkit-tap-highlight-color:transparent;font-family:‘JetBrains Mono’,monospace}
-.dp:active{background:rgba(var(–nr),.28);transform:scale(.9)}
-.hint{text-align:center;font-size:.52rem;color:var(–txt2);margin-top:8px;letter-spacing:.1em}
+.dp{width:54px;height:54px;background:rgba(var(--nr),.07);border:1px solid rgba(var(--nr),.22);border-radius:10px;color:var(--n);font-size:1.15rem;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all .14s;-webkit-tap-highlight-color:transparent;font-family:'JetBrains Mono',monospace}
+.dp:active{background:rgba(var(--nr),.28);transform:scale(.9)}
+.hint{text-align:center;font-size:.52rem;color:var(--txt2);margin-top:8px;letter-spacing:.1em}
 
 /* PROJ/BLOG */
 .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px}
-.pcard{background:rgba(var(–nr),.03);border:1px solid rgba(var(–nr),.13);border-radius:16px;padding:24px 20px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;cursor:pointer}
-.pcard:hover{transform:translateY(-5px);border-color:rgba(var(–nr),.4);box-shadow:0 14px 44px rgba(var(–nr),.1)}
-.pcard::before{content:’’;position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(–n),transparent);opacity:.45}
-.pnum{font-family:‘Syne’,sans-serif;font-weight:800;font-size:2.8rem;color:rgba(var(–nr),.07);position:absolute;top:14px;right:16px;line-height:1}
-.ptag{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(–n);background:rgba(var(–nr),.1);border-radius:4px;padding:3px 8px;display:inline-block;margin-bottom:12px}
-.pttl{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px}
-.pdsc{font-size:.7rem;color:var(–txt2);line-height:1.75}
-.pprog{height:1.5px;background:rgba(var(–nr),.12);border-radius:2px;margin-top:18px;overflow:hidden}
-.pfill{height:100%;background:linear-gradient(90deg,var(–n),#0af);box-shadow:0 0 8px rgba(var(–nr),.5);border-radius:2px}
+.pcard{background:rgba(var(--nr),.03);border:1px solid rgba(var(--nr),.13);border-radius:16px;padding:24px 20px;position:relative;overflow:hidden;transition:transform .2s,border-color .2s,box-shadow .2s;cursor:pointer}
+.pcard:hover{transform:translateY(-5px);border-color:rgba(var(--nr),.4);box-shadow:0 14px 44px rgba(var(--nr),.1)}
+.pcard::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--n),transparent);opacity:.45}
+.pnum{font-family:'Syne',sans-serif;font-weight:800;font-size:2.8rem;color:rgba(var(--nr),.07);position:absolute;top:14px;right:16px;line-height:1}
+.ptag{font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--n);background:rgba(var(--nr),.1);border-radius:4px;padding:3px 8px;display:inline-block;margin-bottom:12px}
+.pttl{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:8px}
+.pdsc{font-size:.7rem;color:var(--txt2);line-height:1.75}
+.pprog{height:1.5px;background:rgba(var(--nr),.12);border-radius:2px;margin-top:18px;overflow:hidden}
+.pfill{height:100%;background:linear-gradient(90deg,var(--n),#0af);box-shadow:0 0 8px rgba(var(--nr),.5);border-radius:2px}
 .bgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px}
-.bcard{background:rgba(var(–nr),.03);border:1px solid rgba(var(–nr),.12);border-radius:16px;padding:26px 22px;transition:transform .2s,box-shadow .2s;cursor:pointer}
-.bcard:hover{transform:translateY(-4px);box-shadow:0 10px 34px rgba(var(–nr),.09)}
-.bdate{font-size:.5rem;letter-spacing:.2em;color:var(–txt2);margin-bottom:10px;text-transform:uppercase}
-.bttl{font-family:‘Syne’,sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px;line-height:1.4}
-.bexc{font-size:.68rem;color:var(–txt2);line-height:1.75}
-.barr{display:inline-block;margin-top:14px;font-size:.68rem;color:var(–n);letter-spacing:.1em}
+.bcard{background:rgba(var(--nr),.03);border:1px solid rgba(var(--nr),.12);border-radius:16px;padding:26px 22px;transition:transform .2s,box-shadow .2s;cursor:pointer}
+.bcard:hover{transform:translateY(-4px);box-shadow:0 10px 34px rgba(var(--nr),.09)}
+.bdate{font-size:.5rem;letter-spacing:.2em;color:var(--txt2);margin-bottom:10px;text-transform:uppercase}
+.bttl{font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;margin-bottom:10px;line-height:1.4}
+.bexc{font-size:.68rem;color:var(--txt2);line-height:1.75}
+.barr{display:inline-block;margin-top:14px;font-size:.68rem;color:var(--n);letter-spacing:.1em}
 
 /* THEME PANEL */
 .tpov{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:150;opacity:0;pointer-events:none;transition:opacity .3s}
 .tpov.on{opacity:1;pointer-events:all}
-.tpanel{position:fixed;right:-310px;top:0;bottom:0;width:295px;background:rgba(2,10,20,.97);border-left:1px solid rgba(var(–nr),.2);backdrop-filter:blur(26px);z-index:200;padding:28px 22px;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto}
+.tpanel{position:fixed;right:-310px;top:0;bottom:0;width:295px;background:rgba(2,10,20,.97);border-left:1px solid rgba(var(--nr),.2);backdrop-filter:blur(26px);z-index:200;padding:28px 22px;transition:right .35s cubic-bezier(.4,0,.2,1);overflow-y:auto}
 .tpanel.on{right:0}
 .tphd{display:flex;justify-content:space-between;align-items:center;margin-bottom:28px}
-.tpttl{font-family:‘Syne’,sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.2em;color:var(–n);text-transform:uppercase}
-.tpcl{background:none;border:none;color:var(–txt2);font-size:1.1rem;cursor:pointer;padding:4px 8px;transition:color .2s}
-.tpcl:hover{color:var(–n)}
+.tpttl{font-family:'Syne',sans-serif;font-weight:800;font-size:.82rem;letter-spacing:.2em;color:var(--n);text-transform:uppercase}
+.tpcl{background:none;border:none;color:var(--txt2);font-size:1.1rem;cursor:pointer;padding:4px 8px;transition:color .2s}
+.tpcl:hover{color:var(--n)}
 .tpsec{margin-bottom:26px}
-.tpsl{font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:var(–txt2);margin-bottom:10px}
+.tpsl{font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;color:var(--txt2);margin-bottom:10px}
 .palg{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
-.pb{border:2px solid transparent;border-radius:10px;padding:9px 4px 7px;cursor:pointer;font-size:.52rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;font-family:‘JetBrains Mono’,monospace;transition:all .2s;text-align:center}
+.pb{border:2px solid transparent;border-radius:10px;padding:9px 4px 7px;cursor:pointer;font-size:.52rem;letter-spacing:.06em;text-transform:uppercase;color:#fff;font-family:'JetBrains Mono',monospace;transition:all .2s;text-align:center}
 .pb.on{border-color:rgba(255,255,255,.85);filter:brightness(1.25)}
 .cpw{display:flex;align-items:center;gap:10px;margin-top:7px}
-.cpw label{font-size:.65rem;color:var(–txt2)}
-#cpick{width:46px;height:38px;border:1px solid rgba(var(–nr),.3);border-radius:7px;background:none;cursor:pointer;padding:2px}
+.cpw label{font-size:.65rem;color:var(--txt2)}
+#cpick{width:46px;height:38px;border:1px solid rgba(var(--nr),.3);border-radius:7px;background:none;cursor:pointer;padding:2px}
 .lbts{display:flex;gap:8px}
-.lb{flex:1;padding:10px 0;background:rgba(var(–nr),.04);border:1px solid rgba(var(–nr),.18);border-radius:8px;color:var(–txt2);font-family:‘JetBrains Mono’,monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.lb.on{border-color:var(–n);color:var(–n);box-shadow:0 0 12px rgba(var(–nr),.2)}
+.lb{flex:1;padding:10px 0;background:rgba(var(--nr),.04);border:1px solid rgba(var(--nr),.18);border-radius:8px;color:var(--txt2);font-family:'JetBrains Mono',monospace;font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .2s}
+.lb.on{border-color:var(--n);color:var(--n);box-shadow:0 0 12px rgba(var(--nr),.2)}
 
-footer{border-top:1px solid rgba(var(–nr),.08);padding:32px 0 24px;text-align:center;font-size:.56rem;letter-spacing:.2em;color:var(–txt2)}
-footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
+footer{border-top:1px solid rgba(var(--nr),.08);padding:32px 0 24px;text-align:center;font-size:.56rem;letter-spacing:.2em;color:var(--txt2)}
+footer strong{color:var(--n);font-family:'Syne',sans-serif;font-weight:700}
 
 @media(max-width:480px){.dp{width:48px;height:48px;font-size:1rem}.cd-cell{min-width:66px;padding:14px 14px 10px}}
 </style>
-
 </head>
 <body>
 <canvas id="bgc"></canvas>
 
 <!-- THEME -->
-
 <div class="tpov" id="tpov" onclick="closeTP()"></div>
 <div class="tpanel" id="tpanel">
   <div class="tphd">
@@ -202,7 +199,6 @@ footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
 </div>
 
 <!-- HERO -->
-
 <section class="hero">
   <div class="live-tag"><div class="live-dot"></div>Yayın Öncesi</div>
   <div class="logo-wrap">
@@ -226,7 +222,6 @@ footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
 </section>
 
 <!-- NAV -->
-
 <nav>
   <div class="nav-inner">
     <button class="nb on" onclick="showSec('games',this)">Oyunlar</button>
@@ -237,7 +232,6 @@ footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
 </nav>
 
 <!-- GAMES -->
-
 <div class="sec on" id="sec-games">
   <div class="wrap">
     <h2 class="sec-h">Oyun <em>Arenası</em></h2>
@@ -250,131 +244,127 @@ footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
       <button class="gsb" onclick="showG('memory',this)">Hafıza</button>
     </div>
 
-```
-<!-- TETRIS -->
-<div class="ga on" id="ga-tetris">
-  <div class="gs">
-    <div class="ghd">
-      <span class="gtitle">⬡ Tetris</span>
-      <div class="sb">
-        <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="tSc">0</span></div>
-        <div class="sco"><span class="sco-l">Seviye</span><span class="sco-v" id="tLv">1</span></div>
-        <div class="sco"><span class="sco-l">Satır</span><span class="sco-v" id="tLn">0</span></div>
+    <!-- TETRIS -->
+    <div class="ga on" id="ga-tetris">
+      <div class="gs">
+        <div class="ghd">
+          <span class="gtitle">⬡ Tetris</span>
+          <div class="sb">
+            <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="tSc">0</span></div>
+            <div class="sco"><span class="sco-l">Seviye</span><span class="sco-v" id="tLv">1</span></div>
+            <div class="sco"><span class="sco-l">Satır</span><span class="sco-v" id="tLn">0</span></div>
+          </div>
+        </div>
+        <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:flex-start">
+          <canvas class="gc" id="tC" width="200" height="400"></canvas>
+          <div>
+            <div style="font-size:.5rem;letter-spacing:.2em;color:var(--txt2);margin-bottom:8px">SONRAKI</div>
+            <canvas id="tNext" width="80" height="80" style="border:1px solid rgba(var(--nr),.15);border-radius:8px;display:block"></canvas>
+          </div>
+        </div>
+        <div class="stbar" id="tSt">Başlamak için butona bas</div>
+        <button class="stbtn" onclick="tetrisStart()">▶ Başlat / Yeniden</button>
+        <div class="dpad">
+          <div class="dpad-r"><button class="dp" onclick="tKey('up')">▲</button></div>
+          <div class="dpad-r">
+            <button class="dp" onclick="tKey('left')">◀</button>
+            <button class="dp" onclick="tKey('down')">▼</button>
+            <button class="dp" onclick="tKey('right')">▶</button>
+          </div>
+        </div>
+        <div class="hint">← → hareket · ↑ döndür · ↓ hızlı düş</div>
       </div>
     </div>
-    <div style="display:flex;gap:16px;justify-content:center;flex-wrap:wrap;align-items:flex-start">
-      <canvas class="gc" id="tC" width="200" height="400"></canvas>
-      <div>
-        <div style="font-size:.5rem;letter-spacing:.2em;color:var(--txt2);margin-bottom:8px">SONRAKI</div>
-        <canvas id="tNext" width="80" height="80" style="border:1px solid rgba(var(--nr),.15);border-radius:8px;display:block"></canvas>
-      </div>
-    </div>
-    <div class="stbar" id="tSt">Başlamak için butona bas</div>
-    <button class="stbtn" onclick="tetrisStart()">▶ Başlat / Yeniden</button>
-    <div class="dpad">
-      <div class="dpad-r"><button class="dp" onclick="tKey('up')">▲</button></div>
-      <div class="dpad-r">
-        <button class="dp" onclick="tKey('left')">◀</button>
-        <button class="dp" onclick="tKey('down')">▼</button>
-        <button class="dp" onclick="tKey('right')">▶</button>
-      </div>
-    </div>
-    <div class="hint">← → hareket · ↑ döndür · ↓ hızlı düş</div>
-  </div>
-</div>
 
-<!-- SNAKE -->
-<div class="ga" id="ga-snake">
-  <div class="gs">
-    <div class="ghd">
-      <span class="gtitle">⬡ Yılan</span>
-      <div class="sb">
-        <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="sSc">0</span></div>
-        <div class="sco"><span class="sco-l">En İyi</span><span class="sco-v" id="sBs">0</span></div>
+    <!-- SNAKE -->
+    <div class="ga" id="ga-snake">
+      <div class="gs">
+        <div class="ghd">
+          <span class="gtitle">⬡ Yılan</span>
+          <div class="sb">
+            <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="sSc">0</span></div>
+            <div class="sco"><span class="sco-l">En İyi</span><span class="sco-v" id="sBs">0</span></div>
+          </div>
+        </div>
+        <canvas class="gc" id="sC" width="320" height="320"></canvas>
+        <div class="stbar" id="sSt">Başlamak için butona bas</div>
+        <button class="stbtn" onclick="snakeStart()">▶ Başlat / Yeniden</button>
+        <div class="dpad">
+          <div class="dpad-r"><button class="dp" onclick="snakeKey(0,-1)">▲</button></div>
+          <div class="dpad-r">
+            <button class="dp" onclick="snakeKey(-1,0)">◀</button>
+            <button class="dp" onclick="snakeKey(0,1)">▼</button>
+            <button class="dp" onclick="snakeKey(1,0)">▶</button>
+          </div>
+        </div>
       </div>
     </div>
-    <canvas class="gc" id="sC" width="320" height="320"></canvas>
-    <div class="stbar" id="sSt">Başlamak için butona bas</div>
-    <button class="stbtn" onclick="snakeStart()">▶ Başlat / Yeniden</button>
-    <div class="dpad">
-      <div class="dpad-r"><button class="dp" onclick="snakeKey(0,-1)">▲</button></div>
-      <div class="dpad-r">
-        <button class="dp" onclick="snakeKey(-1,0)">◀</button>
-        <button class="dp" onclick="snakeKey(0,1)">▼</button>
-        <button class="dp" onclick="snakeKey(1,0)">▶</button>
-      </div>
-    </div>
-  </div>
-</div>
 
-<!-- BREAKOUT -->
-<div class="ga" id="ga-breakout">
-  <div class="gs">
-    <div class="ghd">
-      <span class="gtitle">⬡ Breakout</span>
-      <div class="sb">
-        <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="bSc">0</span></div>
-        <div class="sco"><span class="sco-l">Can</span><span class="sco-v" id="bLv">3</span></div>
+    <!-- BREAKOUT -->
+    <div class="ga" id="ga-breakout">
+      <div class="gs">
+        <div class="ghd">
+          <span class="gtitle">⬡ Breakout</span>
+          <div class="sb">
+            <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="bSc">0</span></div>
+            <div class="sco"><span class="sco-l">Can</span><span class="sco-v" id="bLv">3</span></div>
+          </div>
+        </div>
+        <canvas class="gc" id="bC" width="360" height="420"></canvas>
+        <div class="stbar" id="bSt">Başlamak için butona bas</div>
+        <button class="stbtn" onclick="breakoutStart()">▶ Başlat / Yeniden</button>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
+          <button class="dp" style="width:90px" onpointerdown="bLft=true" onpointerup="bLft=false" onpointerleave="bLft=false">◀ Sol</button>
+          <button class="dp" style="width:90px" onpointerdown="bRgt=true" onpointerup="bRgt=false" onpointerleave="bRgt=false">Sağ ▶</button>
+        </div>
+        <div class="hint">Fare veya parmak ile raketi kontrol et</div>
       </div>
     </div>
-    <canvas class="gc" id="bC" width="360" height="420"></canvas>
-    <div class="stbar" id="bSt">Başlamak için butona bas</div>
-    <button class="stbtn" onclick="breakoutStart()">▶ Başlat / Yeniden</button>
-    <div style="display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap">
-      <button class="dp" style="width:90px" onpointerdown="bLft=true" onpointerup="bLft=false" onpointerleave="bLft=false">◀ Sol</button>
-      <button class="dp" style="width:90px" onpointerdown="bRgt=true" onpointerup="bRgt=false" onpointerleave="bRgt=false">Sağ ▶</button>
-    </div>
-    <div class="hint">Fare veya parmak ile raketi kontrol et</div>
-  </div>
-</div>
 
-<!-- ASTEROIDS -->
-<div class="ga" id="ga-asteroids">
-  <div class="gs">
-    <div class="ghd">
-      <span class="gtitle">⬡ Asteroids</span>
-      <div class="sb">
-        <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="aSc">0</span></div>
-        <div class="sco"><span class="sco-l">Can</span><span class="sco-v" id="aLv">3</span></div>
+    <!-- ASTEROIDS -->
+    <div class="ga" id="ga-asteroids">
+      <div class="gs">
+        <div class="ghd">
+          <span class="gtitle">⬡ Asteroids</span>
+          <div class="sb">
+            <div class="sco"><span class="sco-l">Skor</span><span class="sco-v" id="aSc">0</span></div>
+            <div class="sco"><span class="sco-l">Can</span><span class="sco-v" id="aLv">3</span></div>
+          </div>
+        </div>
+        <canvas class="gc" id="aC" width="360" height="420"></canvas>
+        <div class="stbar" id="aSt">Başlamak için butona bas</div>
+        <button class="stbtn" onclick="asteroidsStart()">▶ Başlat / Yeniden</button>
+        <div class="dpad" style="gap:6px">
+          <div class="dpad-r"><button class="dp" onpointerdown="aK.up=true" onpointerup="aK.up=false" onpointerleave="aK.up=false">▲</button></div>
+          <div class="dpad-r" style="gap:18px">
+            <button class="dp" onpointerdown="aK.lt=true" onpointerup="aK.lt=false" onpointerleave="aK.lt=false">↺</button>
+            <button class="dp" style="background:rgba(255,45,120,.14);border-color:rgba(255,45,120,.4);color:#ff2d78" onpointerdown="aK.fr=true" onpointerup="aK.fr=false">●</button>
+            <button class="dp" onpointerdown="aK.rt=true" onpointerup="aK.rt=false" onpointerleave="aK.rt=false">↻</button>
+          </div>
+        </div>
+        <div class="hint">W/↑ İleri · A/D Döndür · Space/● Ateş</div>
       </div>
     </div>
-    <canvas class="gc" id="aC" width="360" height="420"></canvas>
-    <div class="stbar" id="aSt">Başlamak için butona bas</div>
-    <button class="stbtn" onclick="asteroidsStart()">▶ Başlat / Yeniden</button>
-    <div class="dpad" style="gap:6px">
-      <div class="dpad-r"><button class="dp" onpointerdown="aK.up=true" onpointerup="aK.up=false" onpointerleave="aK.up=false">▲</button></div>
-      <div class="dpad-r" style="gap:18px">
-        <button class="dp" onpointerdown="aK.lt=true" onpointerup="aK.lt=false" onpointerleave="aK.lt=false">↺</button>
-        <button class="dp" style="background:rgba(255,45,120,.14);border-color:rgba(255,45,120,.4);color:#ff2d78" onpointerdown="aK.fr=true" onpointerup="aK.fr=false">●</button>
-        <button class="dp" onpointerdown="aK.rt=true" onpointerup="aK.rt=false" onpointerleave="aK.rt=false">↻</button>
-      </div>
-    </div>
-    <div class="hint">W/↑ İleri · A/D Döndür · Space/● Ateş</div>
-  </div>
-</div>
 
-<!-- MEMORY -->
-<div class="ga" id="ga-memory">
-  <div class="gs">
-    <div class="ghd">
-      <span class="gtitle">⬡ Hafıza</span>
-      <div class="sb">
-        <div class="sco"><span class="sco-l">Hamle</span><span class="sco-v" id="mMv">0</span></div>
-        <div class="sco"><span class="sco-l">Eşleşme</span><span class="sco-v" id="mMt">0</span></div>
+    <!-- MEMORY -->
+    <div class="ga" id="ga-memory">
+      <div class="gs">
+        <div class="ghd">
+          <span class="gtitle">⬡ Hafıza</span>
+          <div class="sb">
+            <div class="sco"><span class="sco-l">Hamle</span><span class="sco-v" id="mMv">0</span></div>
+            <div class="sco"><span class="sco-l">Eşleşme</span><span class="sco-v" id="mMt">0</span></div>
+          </div>
+        </div>
+        <div id="mGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:360px;margin:0 auto"></div>
+        <div class="stbar" id="mSt">Kartları eşleştir!</div>
+        <button class="stbtn" onclick="memStart()">▶ Yeniden Başlat</button>
       </div>
     </div>
-    <div id="mGrid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;max-width:360px;margin:0 auto"></div>
-    <div class="stbar" id="mSt">Kartları eşleştir!</div>
-    <button class="stbtn" onclick="memStart()">▶ Yeniden Başlat</button>
-  </div>
-</div>
-```
-
   </div>
 </div>
 
 <!-- PROJECTS -->
-
 <div class="sec" id="sec-projects">
   <div class="wrap">
     <h2 class="sec-h">Projeler <em>&amp; Çalışmalar</em></h2>
@@ -389,7 +379,6 @@ footer strong{color:var(–n);font-family:‘Syne’,sans-serif;font-weight:700}
 </div>
 
 <!-- BLOG -->
-
 <div class="sec" id="sec-blog">
   <div class="wrap">
     <h2 class="sec-h">Blog <em>&amp; Yazılar</em></h2>
@@ -708,6 +697,5 @@ function resz(){
 }
 resz();window.addEventListener('resize',resz);
 </script>
-
 </body>
 </html>
