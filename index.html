@@ -2,482 +2,381 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kisiyeozel.org - Hediye Avı</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisiyeozel.org - 3D Deneyim</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;900&display=swap');
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Montserrat', sans-serif;
-            user-select: none;
-            /* Dokunmatik seçimleri engelle */
-            -webkit-user-select: none;
-            -webkit-touch-callout: none;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
-            background: radial-gradient(circle at top, #2c1b4d 0%, #0f081c 100%);
-            color: #fff;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             overflow: hidden;
-            touch-action: none; /* Sayfa kaydırmasını engelle */
+            background: radial-gradient(circle at center, #1a1a2e 0%, #000000 100%);
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            user-select: none;
         }
 
-        .game-wrapper {
-            width: 100%;
-            max-width: 500px;
-            height: 90vh;
-            max-height: 800px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+        #canvas-container {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        }
+
+        /* UI Paneli */
+        #ui-panel {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            padding: 40px;
             border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 380px;
             box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        /* Üst Bilgi Barı */
-        .header {
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: rgba(0, 0, 0, 0.3);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            transition: opacity 0.5s, transform 0.5s;
             z-index: 10;
         }
 
-        .logo {
-            font-weight: 900;
-            font-size: 1.2rem;
-            color: #fca311;
-            letter-spacing: 1px;
-        }
-
-        .stats {
-            display: flex;
-            gap: 15px;
-            font-weight: 700;
-            font-size: 1.1rem;
-        }
-
-        #time { color: #ef233c; }
-        #score { color: #2a9d8f; }
-
-        /* Oyun Alanı */
-        .play-area {
-            flex-grow: 1;
-            position: relative;
-            overflow: hidden;
-            touch-action: none;
-        }
-
-        /* Sepet */
-        .basket {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 3.5rem;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            justify-content: center;
-            align-items: flex-end;
-            z-index: 5;
-            transition: transform 0.05s ease-out;
-            pointer-events: none;
-        }
-
-        /* Düşen Nesneler */
-        .item {
-            position: absolute;
-            font-size: 2.5rem;
-            top: -50px;
-            transition: top 0.1s linear;
-        }
-
-        /* Ekranlar (Başlangıç, Kazanma, Kaybetme) */
-        .screen {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(15, 8, 28, 0.95);
-            backdrop-filter: blur(5px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 30px;
-            z-index: 20;
-            transition: opacity 0.3s;
-        }
-
-        .hidden {
+        #ui-panel.fade-out {
             opacity: 0;
+            transform: translate(-50%, -60%);
             pointer-events: none;
         }
 
+        .logo-text { font-size: 2rem; font-weight: 900; color: #ffd700; margin-bottom: 10px; }
+        .subtitle { font-size: 0.9rem; color: #ccc; margin-bottom: 30px; }
+
+        input[type="text"] {
+            width: 100%; padding: 15px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px; color: white;
+            font-size: 1.1rem; margin-bottom: 20px;
+            text-align: center; outline: none;
+        }
+
+        .color-options {
+            display: flex; justify-content: center; gap: 15px; margin-bottom: 30px;
+        }
+
+        .color-opt {
+            width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+            border: 3px solid transparent; transition: transform 0.2s;
+        }
+
+        .color-opt:hover { transform: scale(1.1); }
+        .color-opt.selected { border-color: white; transform: scale(1.2); }
+
+        #btn-prepare {
+            background: linear-gradient(45deg, #ffd700, #ffae00);
+            color: #000; border: none; padding: 15px;
+            font-size: 1.1rem; font-weight: 900; border-radius: 30px;
+            cursor: pointer; width: 100%; transition: transform 0.2s;
+        }
+        #btn-prepare:active { transform: scale(0.95); }
+
+        /* Sonuç Ekranı */
+        #result-screen {
+            position: absolute; top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center; opacity: 0; pointer-events: none;
+            transition: opacity 1s; z-index: 5; width: 100%;
+        }
+
+        #result-screen.fade-in { opacity: 1; pointer-events: auto; }
+        
         h1 {
-            font-size: 1.8rem;
-            color: #fca311;
-            margin-bottom: 15px;
+            font-size: 3.5rem; font-weight: 900; margin: 10px 0;
+            color: #ffd700; text-shadow: 0 0 20px rgba(255,215,0,0.5);
         }
 
-        p {
-            font-size: 0.9rem;
-            line-height: 1.6;
-            margin-bottom: 20px;
-            color: #e5e5e5;
+        .discount-code {
+            display: inline-block; border: 2px dashed #ffd700;
+            padding: 15px 30px; font-size: 2rem; font-weight: 900;
+            color: #fff; margin: 20px 0; border-radius: 10px;
+            background: rgba(0,0,0,0.5);
         }
 
-        /* Geri Sayım Sayacı */
-        .countdown-container {
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .countdown-title {
-            font-size: 0.9rem;
-            color: #e5e5e5;
-            margin-bottom: 10px;
-            font-weight: bold;
-        }
-
-        .countdown {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
-
-        .countdown-box {
-            background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(252, 163, 17, 0.3);
-            border-radius: 8px;
-            padding: 10px;
-            min-width: 60px;
-            text-align: center;
-        }
-
-        .countdown-box span {
-            display: block;
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: #fca311;
-        }
-
-        .countdown-box label {
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: #fff;
-        }
-
-        button {
-            background: #fca311;
-            color: #14213d;
-            border: none;
-            padding: 15px 35px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 50px;
-            cursor: pointer;
-            box-shadow: 0 5px 15px rgba(252, 163, 17, 0.4);
-            transition: transform 0.2s, background 0.2s;
-        }
-
-        button:hover {
-            transform: scale(1.05);
-            background: #e5930b;
-        }
-
-        .discount-box {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px dashed #fca311;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.8rem;
-            font-weight: 900;
-            color: #fca311;
-            letter-spacing: 2px;
-            margin: 20px 0;
-        }
-
-        .rules {
-            background: rgba(0,0,0,0.4);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 0.85rem;
-            text-align: left;
-            margin-bottom: 20px;
-            width: 100%;
-        }
-
-        .rules li {
-            list-style: none;
-            margin-bottom: 8px;
+        #instruction {
+            position: absolute; bottom: 20px; left: 50%;
+            transform: translateX(-50%); font-size: 0.8rem;
+            color: rgba(255,255,255,0.4); pointer-events: none;
         }
     </style>
 </head>
 <body>
 
-    <div class="game-wrapper">
-        <div class="header">
-            <div class="logo">Kisiyeozel.org</div>
-            <div class="stats">
-                <div id="score">Puan: 0</div>
-                <div id="time">Süre: 30s</div>
-            </div>
+    <div id="canvas-container"></div>
+
+    <div id="ui-panel">
+        <div class="logo-text">Kisiyeozel.org</div>
+        <p class="subtitle">Sana özel dünyanın kapıları aralanıyor...</p>
+        
+        <input type="text" id="user-name" placeholder="Adını Buraya Yaz" maxlength="15" autocomplete="off">
+        
+        <div class="color-options">
+            <div class="color-opt selected" style="background-color: #ffd700;" data-color="#ffd700"></div>
+            <div class="color-opt" style="background-color: #ff4757;" data-color="#ff4757"></div>
+            <div class="color-opt" style="background-color: #2ed573;" data-color="#2ed573"></div>
+            <div class="color-opt" style="background-color: #1e90ff;" data-color="#1e90ff"></div>
         </div>
 
-        <div class="play-area" id="playArea">
-            <div class="basket" id="basket">🧺</div>
-        </div>
-
-        <div class="screen" id="startScreen">
-            
-            <div class="countdown-container" id="countdown-wrapper">
-                <div class="countdown-title">BÜYÜK AÇILIŞA SON:</div>
-                <div class="countdown">
-                    <div class="countdown-box"><span id="days">00</span><label>Gün</label></div>
-                    <div class="countdown-box"><span id="hours">00</span><label>Saat</label></div>
-                    <div class="countdown-box"><span id="minutes">00</span><label>Dakika</label></div>
-                    <div class="countdown-box"><span id="seconds">00</span><label>Saniye</label></div>
-                </div>
-            </div>
-
-            <h1>Kisiyeozel.org<br>Hediye Avı</h1>
-            <div class="rules">
-                <li>🎁 📖 🗓️ 🎲 <b>Özel Hediyeler:</b> +10 Puan</li>
-                <li>🧦 <b>Sıradan Çorap:</b> -15 Puan (Dikkat!)</li>
-                <li>🎯 <b>Hedef:</b> 30 Saniyede 100 Puan</li>
-            </div>
-            <button onclick="startGame()">Oyuna Başla</button>
-        </div>
-
-        <div class="screen hidden" id="winScreen">
-            <h1>Tebrikler! 🎉</h1>
-            <p>Sen gerçekten kişiye özel ürünlerden anlıyorsun. 100 puanı başarıyla topladın!</p>
-            <p>1 Haziran'da Kisiyeozel.org açıldığında aşağıdaki kodu kullanarak ilk siparişinde muhteşem bir indirim kazanabilirsin:</p>
-            <div class="discount-box">KISIYEOZEL2026</div>
-            <button onclick="resetGame()">Tekrar Oyna</button>
-        </div>
-
-        <div class="screen hidden" id="loseScreen">
-            <h1>Süre Bitti! ⏳</h1>
-            <p>Maalesef 100 puana ulaşamadın. Sıradan hediyelere dikkat etmelisin!</p>
-            <button onclick="startGame()">Tekrar Dene</button>
-        </div>
+        <button id="btn-prepare">Kutumu Hazırla</button>
     </div>
 
+    <div id="result-screen">
+        <p>Senin İçin Hazırlandı</p>
+        <h1>1 HAZİRAN</h1>
+        <p>Büyük Açılışı Kaçırma!</p>
+        <div class="discount-code">KISIYEOZEL2026</div>
+        <p>İlk siparişine özel indirim kodun.</p>
+    </div>
+
+    <div id="instruction">Fare veya parmağınla kutuyu çevirebilirsin</div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+
     <script>
-        // --- GERİ SAYIM SAYACI ---
-        const countDownDate = new Date("Jun 1, 2026 00:00:00").getTime();
+        let scene, camera, renderer, controls;
+        let box, boxCap, textMesh, particleSystem;
+        let isOpened = false;
 
-        const x = setInterval(function() {
-            const now = new Date().getTime();
-            const distance = countDownDate - now;
+        function init() {
+            scene = new THREE.Scene();
+            camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.set(0, 1.5, 5);
 
-            if (distance < 0) {
-                clearInterval(x);
-                document.getElementById("countdown-wrapper").innerHTML = "<div class='countdown-title' style='color:#fca311; font-size: 1.5rem;'>🎉 SİTEMİZ AÇILDI! 🎉</div>";
+            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            document.getElementById('canvas-container').appendChild(renderer.domElement);
+
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            controls.enableDamping = true;
+            controls.dampingFactor = 0.05;
+            controls.enablePan = false;
+            controls.minDistance = 3;
+            controls.maxDistance = 7;
+
+            scene.add(new THREE.AmbientLight(0xffffff, 0.3));
+            
+            const spotLight = new THREE.SpotLight(0xffffff, 1);
+            spotLight.position.set(5, 5, 5);
+            scene.add(spotLight);
+
+            const pointLight = new THREE.PointLight(0xffffff, 0.5);
+            pointLight.position.set(-5, 5, -5);
+            scene.add(pointLight);
+
+            createBox();
+            animate();
+        }
+
+        function createBox() {
+            const material = new THREE.MeshPhongMaterial({
+                color: 0x111111,
+                shininess: 10,
+            });
+
+            const boxGeo = new THREE.BoxGeometry(2, 1.5, 2);
+            box = new THREE.Mesh(boxGeo, material);
+            scene.add(box);
+
+            const capGeo = new THREE.BoxGeometry(2.1, 0.3, 2.1);
+            boxCap = new THREE.Mesh(capGeo, material);
+            boxCap.position.y = 0.9;
+            box.add(boxCap); 
+        }
+
+        function createTextTexture(text) {
+            const canvas = document.createElement('canvas');
+            canvas.width = 1024; // Çözünürlüğü artırdık, yazı daha net olacak
+            canvas.height = 256;
+            const ctx = canvas.getContext('2d');
+            
+            // Arka planı tamamen temizle (şeffaf)
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Beyaz renk, kalın font
+            ctx.fillStyle = '#ffffff';
+            ctx.font = 'bold 90px Arial, sans-serif'; // Daha standart bir font kullandık
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            
+            // İsim çok uzunsa sığması için ayarlama
+            ctx.fillText(text.toUpperCase(), canvas.width / 2, canvas.height / 2);
+            
+            const texture = new THREE.CanvasTexture(canvas);
+            texture.needsUpdate = true;
+            return texture;
+        }
+
+        let selectedColor = "#ffd700";
+        document.querySelectorAll('.color-opt').forEach(opt => {
+            opt.addEventListener('click', function() {
+                document.querySelector('.color-opt.selected').classList.remove('selected');
+                this.classList.add('selected');
+                selectedColor = this.dataset.color;
+            });
+        });
+
+        document.getElementById('btn-prepare').addEventListener('click', () => {
+            const name = document.getElementById('user-name').value.trim();
+            if(!name) {
+                alert("Lütfen bir isim girin!");
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById('ui-panel').classList.add('fade-out');
+            document.getElementById('instruction').style.display = 'none';
 
-            document.getElementById("days").innerHTML = days < 10 ? "0" + days : days;
-            document.getElementById("hours").innerHTML = hours < 10 ? "0" + hours : hours;
-            document.getElementById("minutes").innerHTML = minutes < 10 ? "0" + minutes : minutes;
-            document.getElementById("seconds").innerHTML = seconds < 10 ? "0" + seconds : seconds;
-        }, 1000);
+            transformBox(name, selectedColor);
+        });
 
-        // --- OYUN KODLARI ---
-        const playArea = document.getElementById('playArea');
-        const basket = document.getElementById('basket');
-        const scoreDisplay = document.getElementById('score');
-        const timeDisplay = document.getElementById('time');
-        
-        const startScreen = document.getElementById('startScreen');
-        const winScreen = document.getElementById('winScreen');
-        const loseScreen = document.getElementById('loseScreen');
-
-        let score = 0;
-        let timeLeft = 30;
-        let gameInterval;
-        let spawnInterval;
-        let isPlaying = false;
-        let items = [];
-
-        const goodItems = ['🎁', '📖', '🗓️', '🎲'];
-        const badItems = ['🧦']; 
-        const winningScore = 100;
-
-        // --- DOKUNMATİK VE MOUSE KONTROLLERİ (Kesin Çözüm) ---
-        function moveBasket(e) {
-            if (!isPlaying) return;
+        function transformBox(name, colorHex) {
+            const targetColor = new THREE.Color(colorHex);
+            const startColor = box.material.color.clone();
             
-            // Mobil cihazlarda ekran kaymasını kesin olarak engellemek için
-            if (e.cancelable && e.type.startsWith('touch')) {
-                e.preventDefault();
-            }
-            
-            let clientX;
-            if(e.type.startsWith('touch')) {
-                clientX = e.touches[0].clientX;
-            } else {
-                clientX = e.clientX;
-            }
-            
-            let rect = playArea.getBoundingClientRect();
-            let relativeX = clientX - rect.left;
+            // Kutuyu tam olarak kameraya (öne) bakacak şekilde hizalamak için hedef açı hesapla
+            const startRotY = box.rotation.y;
+            // En yakın 360 dereceye (2 * PI) yuvarlıyoruz ki tam öne dönsün
+            const targetRotY = Math.round(startRotY / (Math.PI * 2)) * Math.PI * 2; 
 
-            // Sepetin oyun alanının dışına çıkmasını engelle
-            if (relativeX < 40) relativeX = 40;
-            if (relativeX > rect.width - 40) relativeX = rect.width - 40;
+            let progress = 0;
 
-            basket.style.left = relativeX + 'px';
-        }
+            function animateColor() {
+                progress += 0.02; 
+                if (progress <= 1) {
+                    // 1. Renk değiştir
+                    box.material.color.lerpColors(startColor, targetColor, progress);
+                    box.material.shininess = progress * 100;
+                    boxCap.material.color.copy(box.material.color);
+                    boxCap.material.shininess = box.material.shininess;
 
-        // Event Listener'ları doğrudan oyun alanına ekliyoruz ve "passive: false" ile preventDefault kullanabilmeyi sağlıyoruz.
-        playArea.addEventListener('mousemove', moveBasket);
-        playArea.addEventListener('touchmove', moveBasket, {passive: false});
-        // Dokunma başlar başlamaz sepetin parmağa gitmesi için touchstart eklendi
-        playArea.addEventListener('touchstart', moveBasket, {passive: false});
+                    // 2. Kutuyu yumuşakça tam öne çevir
+                    box.rotation.y = startRotY + (targetRotY - startRotY) * progress;
 
-        function startGame() {
-            startScreen.classList.add('hidden');
-            winScreen.classList.add('hidden');
-            loseScreen.classList.add('hidden');
-            
-            score = 0;
-            timeLeft = 30;
-            isPlaying = true;
-            items = [];
-            
-            // Eski öğeleri temizle ve sepeti yeniden yerleştir
-            playArea.innerHTML = ''; 
-            playArea.appendChild(basket);
-            
-            updateDisplay();
-            
-            gameInterval = setInterval(gameLoop, 50);
-            spawnInterval = setInterval(spawnItem, 800); 
-            
-            const timer = setInterval(() => {
-                if(!isPlaying) {
-                    clearInterval(timer);
-                    return;
+                    requestAnimationFrame(animateColor);
+                } else {
+                    box.rotation.y = targetRotY; // Son hizalamayı kesinleştir
+                    addNameAndOpen(name);
                 }
-                timeLeft--;
-                updateDisplay();
-                
-                if (timeLeft <= 0) {
-                    endGame(score >= winningScore);
+            }
+            animateColor();
+        }
+
+        function addNameAndOpen(name) {
+            const textPlaneGeo = new THREE.PlaneGeometry(1.8, 0.45);
+            const textMaterial = new THREE.MeshBasicMaterial({
+                map: createTextTexture(name),
+                transparent: true,
+                alphaTest: 0.1 // Siyah/şeffaf alanlardaki artefaktları engeller
+            });
+            textMesh = new THREE.Mesh(textPlaneGeo, textMaterial);
+            
+            // Yazıyı kutunun ön yüzeyine yapıştır
+            textMesh.position.set(0, 0, 1.01); 
+            box.add(textMesh);
+
+            setTimeout(openBox, 1200);
+        }
+
+        function openBox() {
+            isOpened = true;
+            controls.enableRotate = false; 
+            
+            let camProgress = 0;
+            const startCamPos = camera.position.clone();
+            const targetCamPos = new THREE.Vector3(0, 1.5, 4.5);
+
+            function openAnimation() {
+                let animActive = false;
+
+                if(camProgress < 1) {
+                    camProgress += 0.02;
+                    camera.position.lerpVectors(startCamPos, targetCamPos, camProgress);
+                    camera.lookAt(0, 0, 0);
+                    animActive = true;
                 }
-            }, 1000);
+
+                if(boxCap.position.y < 3) {
+                    boxCap.position.y += 0.02;
+                    boxCap.position.z -= 0.01;
+                    boxCap.rotation.x -= 0.015;
+                    animActive = true;
+                }
+
+                if(animActive) {
+                    requestAnimationFrame(openAnimation);
+                } else {
+                    createParticles();
+                    setTimeout(() => {
+                        document.getElementById('result-screen').classList.add('fade-in');
+                    }, 500);
+                }
+            }
+            openAnimation();
         }
 
-        function spawnItem() {
-            if (!isPlaying) return;
+        function createParticles() {
+            const innerLight = new THREE.PointLight(0xffd700, 2, 10);
+            innerLight.position.set(0, 0.5, 0);
+            scene.add(innerLight);
 
-            const itemEl = document.createElement('div');
-            itemEl.classList.add('item');
-            
-            const isGood = Math.random() > 0.2;
-            const emojiArr = isGood ? goodItems : badItems;
-            const emoji = emojiArr[Math.floor(Math.random() * emojiArr.length)];
-            
-            itemEl.innerText = emoji;
-            itemEl.dataset.type = isGood ? 'good' : 'bad';
-            
-            const playAreaWidth = playArea.getBoundingClientRect().width;
-            const randomX = Math.floor(Math.random() * (playAreaWidth - 50));
-            itemEl.style.left = randomX + 'px';
-            itemEl.style.top = '-50px';
-            
-            playArea.appendChild(itemEl);
-            items.push({ element: itemEl, y: -50, speed: Math.random() * 3 + 5 });
+            const particleCount = 100;
+            const geometry = new THREE.BufferGeometry();
+            const positions = new Float32Array(particleCount * 3);
+
+            for(let i = 0; i < particleCount * 3; i++) {
+                positions[i] = (Math.random() - 0.5) * 1.5;
+            }
+
+            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+
+            const material = new THREE.PointsMaterial({
+                color: 0xffd700,
+                size: 0.05,
+                transparent: true,
+                blending: THREE.AdditiveBlending
+            });
+
+            particleSystem = new THREE.Points(geometry, material);
+            scene.add(particleSystem);
         }
 
-        function gameLoop() {
-            if (!isPlaying) return;
+        function animate() {
+            requestAnimationFrame(animate);
 
-            const basketRect = basket.getBoundingClientRect();
-            const playAreaRect = playArea.getBoundingClientRect();
+            if (!isOpened && box) {
+                // Sadece bekleme modundayken dönsün
+                box.rotation.y += 0.003;
+            }
 
-            for (let i = 0; i < items.length; i++) {
-                let item = items[i];
-                item.y += item.speed;
-                item.element.style.top = item.y + 'px';
-
-                const itemRect = item.element.getBoundingClientRect();
-
-                if (
-                    itemRect.bottom >= basketRect.top + 20 &&
-                    itemRect.top <= basketRect.bottom &&
-                    itemRect.right >= basketRect.left &&
-                    itemRect.left <= basketRect.right
-                ) {
-                    if (item.element.dataset.type === 'good') {
-                        score += 10;
-                    } else {
-                        score -= 15; 
+            if (isOpened && particleSystem) {
+                const positions = particleSystem.geometry.attributes.position.array;
+                for (let i = 1; i < positions.length; i += 3) {
+                    positions[i] += 0.02; 
+                    if (positions[i] > 3) {
+                        positions[i] = 0; 
                     }
-                    
-                    item.element.remove();
-                    items.splice(i, 1);
-                    i--;
-                    updateDisplay();
-
-                    if(score >= winningScore) {
-                        endGame(true);
-                    }
-                } 
-                else if (item.y > playAreaRect.height) {
-                    item.element.remove();
-                    items.splice(i, 1);
-                    i--;
                 }
+                particleSystem.geometry.attributes.position.needsUpdate = true;
             }
+
+            controls.update();
+            renderer.render(scene, camera);
         }
 
-        function updateDisplay() {
-            scoreDisplay.innerText = `Puan: ${score}`;
-            timeDisplay.innerText = `Süre: ${timeLeft}s`;
-        }
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
 
-        function endGame(isWin) {
-            isPlaying = false;
-            clearInterval(gameInterval);
-            clearInterval(spawnInterval);
-            
-            if (isWin) {
-                winScreen.classList.remove('hidden');
-            } else {
-                loseScreen.classList.remove('hidden');
-            }
-        }
-
-        function resetGame() {
-            winScreen.classList.add('hidden');
-            startScreen.classList.remove('hidden');
-            
-            // Başlangıca dönerken ekranda kalan öğeleri temizle
-            items.forEach(item => item.element.remove());
-            items = [];
-        }
+        init();
     </script>
 </body>
 </html>
