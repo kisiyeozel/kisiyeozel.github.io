@@ -13,7 +13,6 @@ if(!$urun) {
 
 $kat = $db->query("SELECT * FROM kategoriler WHERE id = ".$urun['kategori_id'])->fetch(PDO::FETCH_ASSOC);
 
-// Yorum ekle
 if(isset($_POST['yorum_ekle'])) {
     $ad_soyad = $_POST['ad_soyad'];
     $email = $_POST['email'];
@@ -26,12 +25,16 @@ if(isset($_POST['yorum_ekle'])) {
     $mesaj = '<div class="alert alert-success">Yorumunuz gönderildi! Onaylandıktan sonra yayınlanacaktır.</div>';
 }
 
-// Yorumları çek (onaylı)
-$yorumlar = $db->query("SELECT * FROM yorumlar WHERE urun_id = ".$urun['id']." AND durum = 'onaylandi' ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
-$toplamYorum = count($yorumlar);
-$ortalamaPuan = $toplamYorum > 0 ? array_sum(array_column($yorumlar, 'puan')) / $toplamYorum : 0;
+try {
+    $yorumlar = $db->query("SELECT * FROM yorumlar WHERE urun_id = ".$urun['id']." AND durum = 'onaylandi' ORDER BY id DESC")->fetchAll(PDO::FETCH_ASSOC);
+    $toplamYorum = count($yorumlar);
+    $ortalamaPuan = $toplamYorum > 0 ? array_sum(array_column($yorumlar, 'puan')) / $toplamYorum : 0;
+} catch(Exception $e) {
+    $yorumlar = [];
+    $toplamYorum = 0;
+    $ortalamaPuan = 0;
+}
 
-// Sepete ekle
 if(isset($_POST['sepete_ekle'])) {
     sepeteEkle($urun['id'], $_POST['adet'] ?? 1);
     header("Location: sepet.php");
@@ -50,61 +53,31 @@ if(isset($_POST['sepete_ekle'])) {
         .product-detail { padding: 150px 0 80px; }
         .product-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
         .product-detail-image { 
-            background: var(--light); 
+            background: var(--surface); 
+            border: 1px solid var(--glass-border);
             border-radius: var(--radius-lg); 
             height: 450px; 
             display: flex; 
             align-items: center; 
             justify-content: center;
-            position: relative;
-            overflow: hidden;
         }
         .product-detail-image img { max-width: 80%; max-height: 80%; object-fit: contain; }
         .product-detail-info { padding: 20px 0; }
-        .product-detail-title { font-size: 2.5rem; margin-bottom: 15px; color: var(--primary); }
+        .product-detail-title { font-size: 2.5rem; margin-bottom: 15px; }
         .product-rating { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
-        .product-rating-stars { color: var(--gold); font-size: 18px; }
-        .product-rating-count { color: var(--gray); font-size: 14px; }
-        .product-detail-price { font-size: 2.2rem; font-weight: 800; color: var(--primary); margin-bottom: 25px; }
-        .product-detail-price span { font-size: 1.2rem; color: var(--gray); text-decoration: line-through; margin-left: 10px; }
-        .product-detail-desc { color: var(--gray); font-size: 16px; line-height: 1.8; margin-bottom: 30px; }
-        .product-options { background: var(--light); padding: 25px; border-radius: var(--radius-md); margin-bottom: 30px; }
+        .product-rating-stars { color: #fbbf24; font-size: 18px; }
+        .product-rating-count { color: var(--text-muted); font-size: 14px; }
+        .product-detail-price { font-size: 2.2rem; font-weight: 800; margin-bottom: 25px; }
+        .product-detail-price span { font-size: 1.2rem; color: var(--text-muted); text-decoration: line-through; margin-left: 10px; }
+        .product-detail-desc { color: var(--text-muted); font-size: 16px; line-height: 1.8; margin-bottom: 30px; }
+        .product-options { background: var(--surface); padding: 25px; border-radius: var(--radius-md); margin-bottom: 30px; border: 1px solid var(--glass-border); }
         .product-options h4 { margin-bottom: 15px; font-size: 1rem; }
         .product-options ul { list-style: none; }
-        .product-options li { padding: 8px 0; color: var(--gray); font-size: 14px; }
-        .product-options li i { color: var(--accent); margin-right: 10px; width: 20px; }
+        .product-options li { padding: 10px 0; color: var(--text-muted); font-size: 14px; border-bottom: 1px solid var(--glass-border); }
+        .product-options li:last-child { border-bottom: none; }
+        .product-options li i { color: var(--accent-light); margin-right: 10px; width: 20px; }
         .add-to-cart-form { display: flex; gap: 15px; align-items: center; margin-bottom: 30px; }
-        .qty-input { width: 70px; padding: 14px; border: 2px solid var(--gray-light); border-radius: var(--radius-md); text-align: center; font-size: 16px; }
-        .product-badges { display: flex; gap: 15px; align-items: center; margin-bottom: 20px; }
-        .product-badge-detail { padding: 10px 20px; border-radius: 50px; font-size: 13px; font-weight: 600; }
-        .product-badge-detail.free { background: #d1fae5; color: #065f46; }
-        
-        /* Yorumlar */
-        .reviews-section { margin-top: 80px; padding-top: 60px; border-top: 1px solid var(--gray-light); }
-        .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .reviews-header h2 { font-size: 1.8rem; }
-        .reviews-summary { text-align: center; padding: 30px; background: var(--light); border-radius: var(--radius-lg); }
-        .reviews-summary-score { font-size: 3.5rem; font-weight: 800; color: var(--primary); }
-        .reviews-summary-stars { color: var(--gold); font-size: 1.5rem; margin: 10px 0; }
-        .reviews-summary-count { color: var(--gray); font-size: 14px; }
-        .review-form { background: var(--light); padding: 30px; border-radius: var(--radius-lg); margin-bottom: 40px; }
-        .review-form h3 { margin-bottom: 25px; }
-        .rating-select { display: flex; gap: 8px; margin-bottom: 20px; }
-        .rating-select input { display: none; }
-        .rating-select label { font-size: 28px; cursor: pointer; color: var(--gray-light); transition: 0.2s; }
-        .rating-select input:checked ~ label,
-        .rating-select label:hover,
-        .rating-select label:hover ~ label { color: var(--gold); }
-        .review-list { margin-top: 40px; }
-        .review-item { background: var(--white); padding: 25px; border-radius: var(--radius-md); margin-bottom: 20px; border: 1px solid var(--gray-light); }
-        .review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .review-author { font-weight: 700; color: var(--primary); }
-        .review-date { color: var(--gray); font-size: 13px; }
-        .review-stars { color: var(--gold); font-size: 14px; margin-bottom: 10px; }
-        .review-text { color: var(--gray); line-height: 1.7; }
-        .no-reviews { text-align: center; padding: 40px; color: var(--gray); }
-        .no-reviews i { font-size: 48px; margin-bottom: 15px; opacity: 0.5; }
-        
+        .qty-input { width: 70px; padding: 14px; background: var(--surface); border: 1px solid var(--glass-border); border-radius: var(--radius-md); text-align: center; font-size: 16px; color: var(--text); }
         @media (max-width: 768px) {
             .product-detail-grid { grid-template-columns: 1fr; gap: 30px; }
             .product-detail-image { height: 300px; }
@@ -114,6 +87,9 @@ if(isset($_POST['sepete_ekle'])) {
     </style>
 </head>
 <body>
+    <div class="page-bg"></div>
+    <div class="grid-pattern"></div>
+    
     <?php include 'header.php'; ?>
 
     <section class="product-detail">
@@ -152,11 +128,6 @@ if(isset($_POST['sepete_ekle'])) {
                     
                     <p class="product-detail-desc"><?= $urun['aciklama'] ?></p>
                     
-                    <div class="product-badges">
-                        <span class="product-badge-detail free"><i class="fas fa-truck"></i> Ücretsiz Kargo</span>
-                        <span class="product-badge-detail" style="background:#e0e7ff;color:#3730a3;"><i class="fas fa-shield-alt"></i> 2 Yıl Garanti</span>
-                    </div>
-                    
                     <div class="product-options">
                         <h4>Özelleştirme Seçenekleri</h4>
                         <ul>
@@ -176,7 +147,7 @@ if(isset($_POST['sepete_ekle'])) {
                 </div>
             </div>
             
-            <!-- Yorumlar Bölümü -->
+            <!-- Yorumlar -->
             <div class="reviews-section">
                 <div class="reviews-header">
                     <h2>Yorumlar (<?= $toplamYorum ?>)</h2>
@@ -213,14 +184,14 @@ if(isset($_POST['sepete_ekle'])) {
                                     </div>
                                     <div class="form-group">
                                         <label>E-posta</label>
-                                        <input type="email" name="email" placeholder="E-posta (görünmeyecek)">
+                                        <input type="email" name="email" placeholder="E-posta">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label>Yorumunuz</label>
-                                    <textarea name="yorum" rows="4" required placeholder="Ürün hakkında düşüncelerinizi paylaşın..."></textarea>
+                                    <textarea name="yorum" rows="4" required placeholder="Düşüncelerinizi paylaşın..."></textarea>
                                 </div>
-                                <button type="submit" name="yorum_ekle" class="btn btn-primary">Yorumu Gönder</button>
+                                <button type="submit" name="yorum_ekle" class="btn btn-primary">Gönder</button>
                             </form>
                         </div>
                         
@@ -228,7 +199,7 @@ if(isset($_POST['sepete_ekle'])) {
                             <?php if(empty($yorumlar)): ?>
                             <div class="no-reviews">
                                 <i class="far fa-comment-dots"></i>
-                                <p>Henüz yorum yapılmamış. İlk yorumu siz yapın!</p>
+                                <p>Henüz yorum yapılmamış.</p>
                             </div>
                             <?php else: ?>
                             <?php foreach($yorumlar as $yorum): ?>
