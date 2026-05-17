@@ -1,15 +1,9 @@
 <?php
 require_once 'config.php';
 
-// Kategorileri çek
 $stmt = $db->query("SELECT * FROM kategoriler WHERE durum = 'aktif' ORDER BY siralama");
 $kategoriler = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-// Öne çıkan ürünler
-$stmt = $db->query("SELECT * FROM urunler WHERE durum = 'aktif' AND one_cikan = 'evet' ORDER BY id DESC LIMIT 6");
-$oneCikan = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-// Tüm ürünler
 $stmt = $db->query("SELECT * FROM urunler WHERE durum = 'aktif' ORDER BY id DESC");
 $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -22,7 +16,7 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <meta name="description" content="<?= SITE_DESC ?>">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -30,7 +24,7 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <!-- Header -->
     <header class="header">
         <div class="header-top">
-            <i class="fas fa-truck"></i> Ücretsiz Kargo | Siparişleriniz 3-5 İş Günü İçinde Teslim
+            <i class="fas fa-truck"></i> Ücretsiz Kargo &nbsp;•&nbsp; 3-5 İş Günü Teslim &nbsp;•&nbsp; %10 İndirim: KISISEL10
         </div>
         <div class="header-main">
             <div class="container">
@@ -55,10 +49,13 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             <span>Kayıt</span>
                         </a>
                         <a href="sepet.php" class="header-action cart-icon">
-                            <i class="fas fa-shopping-cart"></i>
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Sepet</span>
                             <span class="cart-count"><?= sepetUrunSayisi() ?></span>
                         </a>
                     </div>
+                    
+                    <button class="mobile-toggle">☰</button>
                 </div>
             </div>
         </div>
@@ -66,32 +63,31 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="container">
                 <ul class="nav-links">
                     <li><a href="index.php">Ana Sayfa</a></li>
-                    <li><a href="#urunler">Ürünler</a></li>
-                    <li><a href="#hakkimizda">Hakkımızda</a></li>
-                    <li><a href="#iletisim">İletişim</a></li>
+                    <li><a href="#products">Tüm Ürünler</a></li>
+                    <li><a href="#about">Hakkımızda</a></li>
+                    <li><a href="#contact">İletişim</a></li>
                 </ul>
-                <div class="nav-categories">
-                    <a><i class="fas fa-bars"></i> Kategoriler</a>
-                    <div class="category-dropdown">
-                        <?php foreach($kategoriler as $kat): ?>
-                        <a href="kategori.php?slug=<?= $kat['slug'] ?>"><?= $kat['ad'] ?></a>
-                        <?php endforeach; ?>
-                    </div>
-                </div>
             </div>
         </nav>
     </header>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <span class="hero-badge">✨ Yeni Sezon</span>
+                <span class="hero-badge">
+                    <i class="fas fa-sparkles"></i>
+                    Yeni Sezon
+                </span>
                 <h1>Kendine Özel<br>Hediyeler Yarat</h1>
-                <p>Monopoly, kitap takvim, kişiselleştirilmiş defter ve daha fazlası. Sevdikleriniz için benzersiz, anlamlı hediyeler tasarlayın.</p>
+                <p>Monopoly, kitap takvim, kişiselleştirilmiş defter ve daha fazlası. Sevdikleriniz için benzersiz, anlamlı ve kalıcı hediyeler tasarlayın.</p>
                 <div class="hero-buttons">
-                    <a href="#urunler" class="btn btn-primary"><i class="fas fa-compass"></i> Ürünleri Keşfet</a>
-                    <a href="sepet.php" class="btn btn-outline" style="border-color:white;color:white;background:transparent;">Sepete Git</a>
+                    <a href="#products" class="btn btn-primary">
+                        <i class="fas fa-compass"></i> Ürünleri Keşfet
+                    </a>
+                    <a href="sepet.php" class="btn btn-white">
+                        Sepete Git <i class="fas fa-arrow-right"></i>
+                    </a>
                 </div>
                 <div class="hero-stats">
                     <div class="stat-item">
@@ -116,12 +112,12 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <div class="container">
             <div class="features-grid">
                 <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-paint-brush"></i></div>
+                    <div class="feature-icon"><i class="fas fa-paintbrush"></i></div>
                     <h4>Özel Tasarım</h4>
                     <p>Her ürün sizin için özel tasarlanır.</p>
                 </div>
                 <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
+                    <div class="feature-icon"><i class="fas fa-truck-fast"></i></div>
                     <h4>Hızlı Teslimat</h4>
                     <p>3-5 iş günü içinde kapınızda.</p>
                 </div>
@@ -140,7 +136,7 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <!-- Products -->
-    <section class="products" id="urunler">
+    <section class="products" id="products">
         <div class="container">
             <div class="section-header">
                 <h2>Ürünlerimiz</h2>
@@ -166,13 +162,18 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <?php if($urun['resim'] && file_exists('img/'.$urun['resim'])): ?>
                         <img src="img/<?= $urun['resim'] ?>" alt="<?= $urun['ad'] ?>">
                         <?php else: ?>
-                        <span style="font-size:60px;">🎁</span>
+                        <span style="font-size:70px;">🎁</span>
                         <?php endif; ?>
+                    </div>
+                    <div class="product-actions">
+                        <button class="product-action-btn" title="Sepete Ekle"><i class="fas fa-shopping-bag"></i></button>
+                        <button class="product-action-btn" title="Favori"><i class="fas fa-heart"></i></button>
+                        <button class="product-action-btn" title="Paylaş"><i class="fas fa-share-nodes"></i></button>
                     </div>
                     <div class="product-info">
                         <span class="product-category"><?= $kat['ad'] ?? '' ?></span>
                         <h3 class="product-title"><?= $urun['ad'] ?></h3>
-                        <p class="product-desc"><?= substr($urun['aciklama'], 0, 100) ?>...</p>
+                        <p class="product-desc"><?= substr($urun['aciklama'] ?? 'Kişiye özel üretim', 0, 100) ?>...</p>
                         <div class="product-footer">
                             <div class="product-price">
                                 ₺<?= number_format($urun['fiyat'], 0) ?>
@@ -190,16 +191,16 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </section>
 
     <!-- Banner -->
-    <section class="banner">
-        <div class="container">
+    <section class="banner" id="about">
+        <div class="container banner-content">
             <h2>Özel Tasarım Hediyeler</h2>
             <p>Sevdikleriniz için benzersiz, kişiselleştirilmiş hediyeler yaratın</p>
-            <a href="#iletisim" class="btn btn-primary btn-lg">İletişime Geç</a>
+            <a href="#contact" class="btn btn-primary btn-lg">İletişime Geç</a>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer id="iletisim">
+    <footer id="contact">
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-brand">
@@ -219,9 +220,9 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <h4 class="footer-title">Hızlı Linkler</h4>
                     <ul class="footer-links">
                         <li><a href="index.php">Ana Sayfa</a></li>
-                        <li><a href="#urunler">Ürünler</a></li>
-                        <li><a href="#hakkimizda">Hakkımızda</a></li>
-                        <li><a href="#iletisim">İletişim</a></li>
+                        <li><a href="#products">Ürünler</a></li>
+                        <li><a href="#about">Hakkımızda</a></li>
+                        <li><a href="#contact">İletişim</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
@@ -259,6 +260,8 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 document.querySelectorAll('.product-card').forEach(card => {
                     if(filter === 'all' || card.dataset.category === filter) {
                         card.style.display = 'block';
+                        card.style.opacity = '0';
+                        setTimeout(() => card.style.opacity = '1', 50);
                     } else {
                         card.style.display = 'none';
                     }
@@ -269,9 +272,17 @@ $urunler = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Header scroll
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
-            if(window.scrollY > 100) {
-                header.style.boxShadow = '0 5px 30px rgba(0,0,0,0.1)';
+            if(window.scrollY > 50) {
+                header.style.boxShadow = '0 4px 20px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = 'none';
             }
+        });
+
+        // Mobile menu
+        document.querySelector('.mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').style.display = 
+                document.querySelector('.nav-links').style.display === 'flex' ? 'none' : 'flex';
         });
     </script>
 </body>
