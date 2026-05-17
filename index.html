@@ -2,521 +2,1879 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Kisiyeozel.org - 3D Tasarım Atölyesi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kişiye Özel - Monopoly, Kitap Takvim, Özel Defter ve daha fazlası. Sevdikleriniz için benzersiz, kişiselleştirilmiş hediyeler.">
+    <title>Kişiye Özel | Monopoly, Takvim, Defter - Özel Ürünler</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        :root {
+            --primary: #1a1a2e;
+            --secondary: #16213e;
+            --accent: #e94560;
+            --accent-hover: #c73e54;
+            --gold: #d4af37;
+            --light: #f8f9fa;
+            --dark: #0f0f23;
+            --gray: #6c757d;
+            --success: #28a745;
+            --shadow: 0 10px 40px rgba(0,0,0,0.1);
+            --shadow-hover: 0 20px 60px rgba(0,0,0,0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
         body {
-            overflow: hidden;
-            background: radial-gradient(circle at center, #1a202c 0%, #000000 100%);
             font-family: 'Poppins', sans-serif;
+            color: var(--dark);
+            line-height: 1.7;
+            background: var(--light);
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+            font-weight: 600;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 10px; }
+        .mb-2 { margin-bottom: 20px; }
+        .mb-3 { margin-bottom: 30px; }
+        .mb-4 { margin-bottom: 40px; }
+        .mb-5 { margin-bottom: 50px; }
+        
+        .section-padding { padding: 100px 0; }
+        
+        /* Header */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: white;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.08);
+        }
+        
+        .header-top {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
             color: white;
-            user-select: none;
-            touch-action: none;
+            padding: 10px 0;
+            text-align: center;
+            font-size: 14px;
         }
-
-        #canvas-container {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+        
+        .header-top i { margin-right: 8px; }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
         }
-
-        /* Sol Üst Logo ve Tarih */
-        .top-bar {
+        
+        .logo {
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo i {
+            color: var(--accent);
+            font-size: 24px;
+        }
+        
+        .logo span {
+            color: var(--accent);
+        }
+        
+        .nav-menu {
+            display: flex;
+            align-items: center;
+            gap: 35px;
+            list-style: none;
+        }
+        
+        .nav-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 15px;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .nav-link:hover {
+            color: var(--accent);
+        }
+        
+        .nav-actions {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+        
+        .cart-btn {
+            position: relative;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--primary);
+        }
+        
+        .cart-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--accent);
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .mobile-toggle {
+            display: none;
+            font-size: 24px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        /* Hero Section */
+        .hero {
+            margin-top: 70px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, rgba(26,26,46,0.92) 0%, rgba(22,33,62,0.88) 100%),
+                        url('https://images.unsplash.com/photo-1456324504439-367cee3b3c32?w=1920') center/cover;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(233,69,96,0.1) 0%, transparent 70%);
+            top: -200px;
+            right: -200px;
+        }
+        
+        .hero-content {
+            max-width: 650px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero-badge {
+            display: inline-block;
+            background: rgba(233,69,96,0.2);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            border: 1px solid rgba(233,69,96,0.3);
+        }
+        
+        .hero h1 {
+            font-size: 3.8rem;
+            line-height: 1.15;
+            margin-bottom: 25px;
+        }
+        
+        .hero p {
+            font-size: 1.15rem;
+            opacity: 0.9;
+            margin-bottom: 35px;
+            line-height: 1.8;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 16px 32px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 15px;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            border: none;
+        }
+        
+        .btn-primary {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(233,69,96,0.4);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary);
+            border-color: white;
+        }
+        
+        .btn-white {
+            background: white;
+            color: var(--primary);
+        }
+        
+        .btn-white:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 50px;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+        
+        .stat-item h3 {
+            font-size: 2rem;
+            color: var(--accent);
+        }
+        
+        .stat-item p {
+            font-size: 14px;
+            opacity: 0.8;
+            margin: 0;
+        }
+        
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .feature-box {
+            text-align: center;
+            padding: 40px 25px;
+            border-radius: 20px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+        
+        .feature-box:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--accent), #ff6b6b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 28px;
+            color: white;
+        }
+        
+        .feature-box h4 {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+        
+        .feature-box p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+        
+        /* Products Section */
+        .products {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .section-header {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto 60px;
+        }
+        
+        .section-header h2 {
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+        
+        .section-header p {
+            color: var(--gray);
+            font-size: 1.05rem;
+        }
+        
+        .products-filter {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 12px 25px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 35px;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.4s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-12px);
+            box-shadow: var(--shadow-hover);
+        }
+        
+        .product-badge {
             position: absolute;
             top: 20px;
             left: 20px;
-            z-index: 10;
-            pointer-events: none;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2rem;
-            color: #d4af37;
-            text-shadow: 0 2px 10px rgba(212, 175, 55, 0.3);
-        }
-
-        .date-badge {
-            display: inline-block;
-            background: rgba(212, 175, 55, 0.2);
-            border: 1px solid #d4af37;
-            color: #d4af37;
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            margin-top: 5px;
-            font-weight: 600;
-        }
-
-        /* Sağ Alt Kontrol Paneli */
-        #ui-panel {
-            position: absolute;
-            bottom: 30px;
-            right: 30px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(15px);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(212, 175, 55, 0.3);
-            width: 350px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
-            z-index: 10;
-            transition: transform 0.5s, opacity 0.5s;
-        }
-
-        #ui-panel.hidden {
-            transform: translateY(150%);
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        .panel-title {
-            font-size: 1.2rem;
-            color: #fff;
-            margin-bottom: 20px;
-            font-weight: 600;
-        }
-
-        .product-selector {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .product-btn {
-            flex: 1;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+            background: var(--accent);
             color: white;
-            padding: 10px 5px;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        .product-btn.active {
-            background: #d4af37;
-            border-color: #d4af37;
-            color: black;
-            font-weight: bold;
-        }
-
-        .input-group {
-            margin-bottom: 20px;
-        }
-
-        .input-group label {
-            display: block;
-            font-size: 0.8rem;
-            color: #aaa;
-            margin-bottom: 5px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 175, 55, 0.5);
-            border-radius: 10px;
-            color: #d4af37;
-            font-size: 1.1rem;
-            font-family: 'Playfair Display', serif;
-            outline: none;
-        }
-
-        input[type="text"]::placeholder {
-            color: rgba(212, 175, 55, 0.3);
-        }
-
-        #btn-confirm {
-            background: linear-gradient(45deg, #d4af37, #f3e5ab);
-            color: #000;
-            border: none;
-            padding: 15px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 10px;
-            cursor: pointer;
-            width: 100%;
-            transition: transform 0.2s;
-        }
-
-        #btn-confirm:active { transform: scale(0.95); }
-
-        /* Sonuç Ekranı */
-        #result-screen {
-            position: absolute;
-            top: 50%; left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 1s;
-            z-index: 5;
-            width: 100%;
-        }
-
-        #result-screen.fade-in {
-            opacity: 1;
-            pointer-events: auto;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 1;
         }
         
-        #result-screen h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 4rem;
-            color: #d4af37;
-            margin-bottom: 10px;
-            text-shadow: 0 0 30px rgba(212, 175, 55, 0.4);
+        .product-badge.popular {
+            background: var(--gold);
         }
-
-        .discount-box {
-            display: inline-block;
-            background: rgba(0,0,0,0.8);
-            border: 2px dashed #d4af37;
-            padding: 20px 40px;
-            font-size: 2.5rem;
-            font-weight: 900;
-            color: #fff;
-            margin: 20px 0;
-            border-radius: 15px;
-            letter-spacing: 2px;
+        
+        .product-image {
+            height: 280px;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-
-        .instruction {
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .product-card:hover .product-image img {
+            transform: scale(1.1);
+        }
+        
+        .product-overlay {
             position: absolute;
-            bottom: 30px;
-            left: 30px;
-            color: rgba(255,255,255,0.5);
-            font-size: 0.9rem;
-            pointer-events: none;
+            bottom: -60px;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            opacity: 0;
+            transition: all 0.3s;
         }
-
+        
+        .product-card:hover .product-overlay {
+            bottom: 0;
+            opacity: 1;
+        }
+        
+        .overlay-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            color: var(--primary);
+            transition: all 0.3s;
+        }
+        
+        .overlay-btn:hover {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .product-info {
+            padding: 30px;
+        }
+        
+        .product-category {
+            font-size: 12px;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        
+        .product-title {
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        
+        .product-desc {
+            color: var(--gray);
+            font-size: 14px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        
+        .product-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .feature-tag {
+            background: var(--light);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: var(--gray);
+        }
+        
+        .product-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+        
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .product-price span {
+            font-size: 14px;
+            color: var(--gray);
+            font-weight: 400;
+        }
+        
+        .product-btn {
+            padding: 12px 25px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .product-btn:hover {
+            background: var(--accent);
+        }
+        
+        /* Customization Section */
+        .customization {
+            padding: 100px 0;
+            background: var(--primary);
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .customization::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(233,69,96,0.15) 0%, transparent 70%);
+            bottom: -200px;
+            left: -100px;
+        }
+        
+        .customization .section-header h2 {
+            color: white;
+        }
+        
+        .customization .section-header p {
+            color: rgba(255,255,255,0.7);
+        }
+        
+        .custom-steps {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+        }
+        
+        .step-card {
+            text-align: center;
+            position: relative;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 auto 25px;
+            position: relative;
+        }
+        
+        .step-card h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+        
+        .step-card p {
+            font-size: 14px;
+            opacity: 0.8;
+            line-height: 1.7;
+        }
+        
+        .step-arrow {
+            position: absolute;
+            top: 30px;
+            right: -20px;
+            font-size: 24px;
+            color: rgba(255,255,255,0.3);
+        }
+        
+        /* Gallery Section */
+        .gallery {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+        }
+        
+        .gallery-item {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .gallery-item:nth-child(1) { grid-row: span 2; }
+        .gallery-item:nth-child(4) { grid-column: span 2; }
+        
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent 50%, rgba(0,0,0,0.7));
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-overlay {
+            opacity: 1;
+        }
+        
+        .gallery-overlay span {
+            color: white;
+            font-weight: 500;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 100px 0;
+            background: var(--light);
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 25px;
+            font-size: 80px;
+            color: var(--accent);
+            opacity: 0.1;
+            font-family: serif;
+            line-height: 1;
+        }
+        
+        .testimonial-text {
+            font-size: 15px;
+            color: var(--gray);
+            line-height: 1.8;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .author-avatar {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), #ff6b6b);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .author-info h5 {
+            font-size: 1rem;
+            color: var(--primary);
+        }
+        
+        .author-info p {
+            font-size: 13px;
+            color: var(--gray);
+        }
+        
+        .testimonial-stars {
+            color: var(--gold);
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+        
+        /* FAQ Section */
+        .faq {
+            padding: 100px 0;
+            background: white;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 25px;
+            background: var(--light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--primary);
+            transition: background 0.3s;
+        }
+        
+        .faq-question:hover {
+            background: #eee;
+        }
+        
+        .faq-question i {
+            transition: transform 0.3s;
+            color: var(--accent);
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        .faq-answer {
+            padding: 0 25px;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 25px;
+            max-height: 300px;
+        }
+        
+        .faq-answer p {
+            color: var(--gray);
+            line-height: 1.8;
+        }
+        
+        /* Contact Section */
+        .contact {
+            padding: 100px 0;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            position: relative;
+        }
+        
+        .contact::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.05)"/></svg>') repeat;
+            background-size: 30px 30px;
+        }
+        
+        .contact .section-header h2,
+        .contact .section-header p {
+            color: white;
+        }
+        
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin-top: 60px;
+            position: relative;
+        }
+        
+        .contact-info h4 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .contact-info h4 i {
+            color: var(--accent);
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+        
+        .contact-details p {
+            opacity: 0.9;
+            margin: 2px 0;
+        }
+        
+        .contact-form {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            color: var(--dark);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--primary);
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 15px;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-submit {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .form-submit:hover {
+            background: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+        
+        /* Newsletter */
+        .newsletter {
+            padding: 60px 0;
+            background: var(--accent);
+            color: white;
+            text-align: center;
+        }
+        
+        .newsletter h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        
+        .newsletter p {
+            opacity: 0.9;
+            margin-bottom: 25px;
+        }
+        
+        .newsletter-form {
+            display: flex;
+            max-width: 500px;
+            margin: 0 auto;
+            gap: 10px;
+        }
+        
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px 20px;
+            border: none;
+            border-radius: 30px;
+            font-size: 15px;
+        }
+        
+        .newsletter-form button {
+            padding: 15px 30px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .newsletter-form button:hover {
+            background: var(--dark);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 80px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-brand .logo {
+            color: white;
+            margin-bottom: 20px;
+        }
+        
+        .footer-brand p {
+            opacity: 0.7;
+            font-size: 14px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-link:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .footer-title {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+            color: white;
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--accent);
+            padding-left: 5px;
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 14px;
+            opacity: 0.7;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .features-grid,
+            .custom-steps {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .gallery-item:nth-child(1) { grid-row: span 1; }
+            .gallery-item:nth-child(4) { grid-column: span 1; }
+            
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        
         @media (max-width: 768px) {
-            #ui-panel {
-                right: 50%;
-                transform: translateX(50%);
-                width: 90%;
-                bottom: 20px;
+            .mobile-toggle {
+                display: block;
             }
-            #ui-panel.hidden {
-                transform: translate(50%, 150%);
+            
+            .nav-menu {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                right: 0;
+                background: white;
+                flex-direction: column;
+                padding: 20px;
+                gap: 0;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+                display: none;
             }
-            .instruction { display: none; }
+            
+            .nav-menu.active {
+                display: flex;
+            }
+            
+            .nav-menu li {
+                width: 100%;
+            }
+            
+            .nav-link {
+                display: block;
+                padding: 15px 0;
+                border-bottom: 1px solid #eee;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-stats {
+                flex-direction: column;
+                gap: 25px;
+            }
+            
+            .features-grid,
+            .custom-steps,
+            .testimonial-grid,
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .contact-wrapper {
+                grid-template-columns: 1fr;
+            }
+            
+            .newsletter-form {
+                flex-direction: column;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
         }
     </style>
 </head>
 <body>
-
-    <div id="canvas-container"></div>
-
-    <div class="top-bar">
-        <div class="logo">Kisiyeozel.org</div>
-        <div class="date-badge">📅 1 Haziran'da Açılıyoruz</div>
-    </div>
-
-    <div class="instruction">
-        <span style="font-size: 1.5rem;">👆</span><br>
-        Ürünü incelemek için<br>sürükle ve çevir
-    </div>
-
-    <div id="ui-panel">
-        <div class="panel-title">Tasarımını Oluştur</div>
-        
-        <div class="product-selector">
-            <button class="product-btn active" data-type="monopoly">Monopoly</button>
-            <button class="product-btn" data-type="book">Kitap</button>
-            <button class="product-btn" data-type="calendar">Takvim</button>
+    <!-- Header -->
+    <header>
+        <div class="header-top">
+            <i class="fas fa-truck"></i> Ücretsiz Kargo | Siparişiniz 3-5 İş Günü İçinde Teslim | <i class="fas fa-gift"></i> %10 İndirim Kodu: KISISEL10
         </div>
+        <nav class="navbar">
+            <a href="#" class="logo">
+                <i class="fas fa-gift"></i>
+                Kişiye<span>Özel</span>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Ana Sayfa</a></li>
+                <li><a href="#products" class="nav-link">Ürünler</a></li>
+                <li><a href="#customization" class="nav-link">Nasıl Özelleştirilir?</a></li>
+                <li><a href="#gallery" class="nav-link">Galeri</a></li>
+                <li><a href="#testimonials" class="nav-link">Yorumlar</a></li>
+                <li><a href="#faq" class="nav-link">SSS</a></li>
+                <li><a href="#contact" class="nav-link">İletişim</a></li>
+            </ul>
+            <div class="nav-actions">
+                <button class="cart-btn">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-badge">0</span>
+                </button>
+                <button class="mobile-toggle">☰</button>
+            </div>
+        </nav>
+    </header>
 
-        <div class="input-group">
-            <label>Ürüne Yazılacak İsim veya Mesaj</label>
-            <input type="text" id="user-name" placeholder="Örn: Yılmaz Ailesi" maxlength="20" autocomplete="off">
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">✨ Yeni Sezon Ürünleri</span>
+                <h1>Kendine Özel<br>Hediyeler Yarat</h1>
+                <p>Monopoly, kitap takvim, kişiselleştirilmiş defter ve daha fazlası. Sevdikleriniz için benzersiz, anlamlı ve kalıcı hediyeler tasarlayın.</p>
+                <div class="hero-buttons">
+                    <a href="#products" class="btn btn-primary">
+                        <i class="fas fa-compass"></i> Ürünleri Keşfet
+                    </a>
+                    <a href="#contact" class="btn btn-secondary">
+                        <i class="fas fa-envelope"></i> İletişime Geç
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <h3>5000+</h3>
+                        <p>Mutlu Müşteri</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>150+</h3>
+                        <p>Özel Tasarım</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>%98</h3>
+                        <p>Memnuniyet</p>
+                    </div>
+                </div>
+            </div>
         </div>
+    </section>
 
-        <button id="btn-confirm">Tasarımımı Onayla</button>
-    </div>
+    <!-- Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h4>Özel Tasarım</h4>
+                    <p>Her ürün sizin için özel tasarlanır, isim ve fotoğraflarınız eklenir.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-shipping-fast"></i>
+                    </div>
+                    <h4>Hızlı Teslimat</h4>
+                    <p>Siparişleriniz 3-5 iş günü içinde kapınıza teslim edilir.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h4>Kaliteli Malzeme</h4>
+                    <p>Premium kalite kağıt, baskı ve malzemeler kullanıyoruz.</p>
+                </div>
+                <div class="feature-box">
+                    <div class="feature-icon">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <h4>Mükemmel Hediye</h4>
+                    <p>Unutulmaz anılar için mükemmel hediye seçeneği.</p>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <div id="result-screen">
-        <p style="font-size: 1.2rem; color: #ccc;">Harika bir seçim!</p>
-        <h1>1 HAZİRAN</h1>
-        <p style="font-size: 1.1rem; max-width: 600px; margin: 0 auto; line-height: 1.6;">Bu tasarım 1 Haziran'da gerçeğe dönüşmeyi bekliyor. Açılış günü sitemize gel ve aşağıdaki kod ile bu ürüne özel indirimle sahip ol.</p>
-        <div class="discount-box">KISIYEOZEL26</div>
-    </div>
+    <!-- Products Section -->
+    <section class="products" id="products">
+        <div class="container">
+            <div class="section-header">
+                <h2>Ürünlerimiz</h2>
+                <p>İsteğinize göre tamamen kişiselleştirilebilen özel ürünlerimizi keşfedin</p>
+            </div>
+            
+            <div class="products-filter">
+                <button class="filter-btn active" data-filter="all">Tüm Ürünler</button>
+                <button class="filter-btn" data-filter="monopoly">Monopoly</button>
+                <button class="filter-btn" data-filter="takvim">Takvim</button>
+                <button class="filter-btn" data-filter="defter">Defter</button>
+                <button class="filter-btn" data-filter="planner">Planner</button>
+                <button class="filter-btn" data-filter="hediye">Hediye</button>
+            </div>
+            
+            <div class="product-grid">
+                <!-- Product 1 -->
+                <div class="product-card" data-category="monopoly">
+                    <span class="badge popular">En Popüler</span>
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#667eea,#764ba2);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            🎲
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Monopoly</span>
+                        <h3 class="product-title">Kişiye Özel Monopoly</h3>
+                        <p class="product-desc">Ailenize veya arkadaşlarınıza özel monopoly seti. Oyun tahtası, kartlar ve para üzerine isimleriniz, fotoğraflarınız ve özel mekanlarınız eklenir.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Özel Tahta</span>
+                            <span class="feature-tag">Fotoğraf Ekleme</span>
+                            <span class="feature-tag">Özel Kartlar</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺349 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('monopoly')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card" data-category="takvim">
+                    <span class="product-badge">Yeni</span>
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#4facfe,#00f2fe);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            📅
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Takvim</span>
+                        <h3 class="product-title">Kitap Takvim</h3>
+                        <p class="product-desc">365 günlük anılarınızı ve özel günlerinizi anlatan benzersiz takvim. Her ay için özel fotoğraf ve not eklenebilir.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">365 Sayfa</span>
+                            <span class="feature-tag">Özel Tasarım</span>
+                            <span class="feature-tag">Sert Kapak</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺199 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('takvim')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card" data-category="defter">
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#43e97b,#38f9d7);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            📔
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Defter</span>
+                        <h3 class="product-title">Kişiselleştirilmiş Defter</h3>
+                        <p class="product-desc">İsminiz ve özel tasarımınız ile hazırlanmış benzersiz defter. Günlük, hatıra defteri veya özel not defteri olarak kullanabilirsiniz.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Sert Kapak</span>
+                            <span class="feature-tag">İsim Baskı</span>
+                            <span class="feature-tag">200 Sayfa</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺129 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('defter')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card" data-category="planner">
+                    <span class="product-badge">Tükenmek Üzere</span>
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#fa709a,#fee140);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            📓
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Planner</span>
+                        <h3 class="product-title">Özel Yıl Planner'ı</h3>
+                        <p class="product-desc">Yıl hedeflerinizi, aylık ve günlük planlarınızı takip edeceğiniz kişisel planlayıcı. Motivasyon alıntıları ve özel tasarım.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Aylık Plan</span>
+                            <span class="feature-tag">Hedef Tablosu</span>
+                            <span class="feature-tag">Kalıcı Taslak</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺179 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('planner')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card" data-category="hediye">
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#a8edea,#fed6e3);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            🎁
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Hediye</span>
+                        <h3 class="product-title">Özel Hediye Kutusu</h3>
+                        <p class="product-desc">Doğum günü, yıl dönümü veya özel günler için hazırlanmış, tamamen kişiselleştirilmiş hediye kutusu.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Özel Kutu</span>
+                            <span class="feature-tag">Birden Fazla Ürün</span>
+                            <span class="feature-tag">Özel Not</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺249 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('hediye')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="product-card" data-category="hediye">
+                    <div class="product-image">
+                        <div style="width:100%;height:100%;background:linear-gradient(135deg,#ff9a9e,#fecfef);display:flex;align-items:center;justify-content:center;font-size:100px;">
+                            🖼️
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">Çerçeve</span>
+                        <h3 class="product-title">Özel Fotoğraf Çerçevesi</h3>
+                        <p class="product-desc">En güzel anılarınız için özel tasarım çerçeveler. İsim, tarih ve özel mesaj eklenebilir.</p>
+                        <div class="product-features">
+                            <span class="feature-tag">Ahşap Çerçeve</span>
+                            <span class="feature-tag">Özel Tasarım</span>
+                            <span class="feature-tag">Duvar Askısı</span>
+                        </div>
+                        <div class="product-footer">
+                            <div class="product-price">₺89 <span>/ adet</span></div>
+                            <button class="product-btn" onclick="scrollToContact('cerceve')">Sipariş Ver</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+    <!-- Customization Section -->
+    <section class="customization" id="customization">
+        <div class="container">
+            <div class="section-header">
+                <h2>Nasıl Özelleştirilir?</h2>
+                <p>Siparişinizi nasıl kişiselleştireceğinizi adım adım anlatıyoruz</p>
+            </div>
+            
+            <div class="custom-steps">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h4>Ürün Seçin</h4>
+                    <p>İstediğiniz ürünü seçin ve detaylarını inceleyin. Her ürün farklı özelleştirme seçenekleri sunar.</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h4>Bilgileri Girin</h4>
+                    <p>İsimler, fotoğraflar, tarihler ve özel mesajlarınızı bize iletin. Formu doldurmanız yeterli.</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h4>Tasarım Onayı</h4>
+                    <p>Tasarımı hazırlayıp size gönderiyoruz. Onayınızı aldıktan sonra üretime başlıyoruz.</p>
+                    <span class="step-arrow">→</span>
+                </div>
+                <div class="step-card">
+                    <div class="step-number">4</div>
+                    <h4>Teslimat</h4>
+                    <p>Ürününüz özenle paketlenerek 3-5 iş günü içinde kapınıza teslim edilir.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <h2>Galeri</h2>
+                <p>Önceki müşterilerimiz için hazırladığımız özel ürünlerden örnekler</p>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1513519245088-0e12902e35ca?w=600" alt="Monopoly">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=600" alt="Takvim">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1531346878377-a5be20888e57?w=600" alt="Defter">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600" alt="Kitap">
+                </div>
+                <div class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=600" alt="Planner">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials" id="testimonials">
+        <div class="container">
+            <div class="section-header">
+                <h2>Müşteri Yorumları</h2>
+                <p>Binlerce mutlu müşterimizden bazıları</p>
+            </div>
+            
+            <div class="testimonial-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">Aile monopoyu için sipariş verdik, çocuklar çok mutlu oldu. Her karede isimlerimiz ve fotoğraflarımız var. Kesinlikle tavsiye ederim!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h5>Ayşe K.</h5>
+                            <p>Kişiye Özel Monopoly</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">Annem için yıl dönümü hediyesi olarak kitap takvim aldım. Çok güzel oldu, her sayfa özel hissettiriyor. Teşekkürler!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">M</div>
+                        <div class="author-info">
+                            <h5>Mehmet T.</h5>
+                            <p>Kitap Takvim</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-stars">★★★★★</div>
+                    <p class="testimonial-text">Kişiselleştirilmiş defterimi çok beğendim. Kalitesi de tasarımı da harika. Herkese kendi isimli defterini tavsiye ederim!</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">S</div>
+                        <div class="author-info">
+                            <h5>Seda Y.</h5>
+                            <p>Kişiselleştirilmiş Defter</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq" id="faq">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sıkça Sorulan Sorular</h2>
+                <p>Merak ettiğiniz soruların cevapları</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Ürünlerin teslimat süresi ne kadar?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Siparişleriniz ödeme onayından itibaren 3-5 iş günü içinde kargoya verilir. Kargo süresi mesafeye göre 1-3 gün arasında değişebilir. Toplamda 4-8 iş günü içinde ürününüzü teslim alırsınız.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Özelleştirme için hangi bilgileri girmem gerekiyor?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Ürüne göre değişmekle birlikte genellikle; isimler, fotoğraflar ( dijital olarak e-posta ile gönderilebilir), tarihler, özel mesajlar ve renk/tema tercihlerinizi iletmeniz yeterlidir. Formu doldururken tüm detayları yazabilirsiniz.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Ürünlerin garantisi var mı?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Evet, tüm ürünlerimiz 2 yıl garanti kapsamındadır. Üretim hatası veya malzeme kusuru durumunda ücretsiz değişim veya iade imkanı sunuyoruz.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Hangi ödeme yöntemlerini kabul ediyorsunuz?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kredi kartı, banka kartı, Havale/EFT ve Kapıda nakit ödeme seçeneklerimiz mevcuttur. Ayrıca taksit seçenekleri de sunmaktayız.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Ürünü beğenmezsem iade edebilir miyim?
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Kişiselleştirilmiş ürünlerde imalat hatası olmadığı sürece iade yapılmamaktadır. Ancak tasarım onayı öncesinde örneğini gönderiyoruz, onay verdikten sonra üretime başlıyoruz. Bu sayfanın avantajından yararlanabilirsiniz.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-header">
+                <h2>Sipariş Ver</h2>
+                <p>İstediğiniz ürünü ve özelleştirme detaylarını bize bildirin</p>
+            </div>
+            
+            <div class="contact-wrapper">
+                <div class="contact-info">
+                    <h4><i class="fas fa-headset"></i> Bize Ulaşın</h4>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p><strong>Telefon</strong></p>
+                            <p>+90 555 123 4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p><strong>E-posta</strong></p>
+                            <p>info@kisiyeozel.org</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p><strong>WhatsApp</strong></p>
+                            <p>+90 555 123 4567</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="contact-details">
+                            <p><strong>Adres</strong></p>
+                            <p>İstanbul, Türkiye</p>
+                        </div>
+                    </div>
+                    
+                    <h4 style="margin-top: 30px;"><i class="fas fa-clock"></i> Çalışma Saatleri</h4>
+                    <p style="opacity: 0.8; margin-top: 10px;">Pazartesi - Cumartesi: 09:00 - 20:00<br>Pazar: 10:00 - 18:00</p>
+                </div>
+                
+                <form class="contact-form" id="orderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Ad Soyad *</label>
+                            <input type="text" name="name" required placeholder="Adınızı girin">
+                        </div>
+                        <div class="form-group">
+                            <label>Telefon *</label>
+                            <input type="tel" name="phone" required placeholder="Telefon numaranız">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>E-posta</label>
+                        <input type="email" name="email" placeholder="E-posta adresiniz">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Ürün Seçimi *</label>
+                        <select name="product" id="productSelect" required>
+                            <option value="">Ürün seçin</option>
+                            <option value="monopoly">Kişiye Özel Monopoly - ₺349</option>
+                            <option value="takvim">Kitap Takvim - ₺199</option>
+                            <option value="defter">Kişiselleştirilmiş Defter - ₺129</option>
+                            <option value="planner">Özel Planner - ₺179</option>
+                            <option value="hediye">Hediye Kutusu - ₺249</option>
+                            <option value="cerceve">Özel Çerçeve - ₺89</option>
+                            <option value="diger">Diğer (Açıklama kısmında belirtin)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Özelleştirme Detayları *</label>
+                        <textarea name="message" rows="5" placeholder="İsimler, fotoğraflar, renk tercihleri, özel mesajlar ve diğer detayları yazın..."></textarea>
+                    </div>
+                    
+                    <button type="submit" class="form-submit">
+                        <i class="fas fa-paper-plane"></i> Siparişi Gönder
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="newsletter">
+        <div class="container">
+            <h3>İndirimlerden Haberdar Olun</h3>
+            <p>Özel indirimler ve fırsatlar için bültenimize abone olun</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Teşekkürler! Abone oldunuz.');">
+                <input type="email" placeholder="E-posta adresiniz" required>
+                <button type="submit">Abone Ol</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <a href="#" class="logo">
+                        <i class="fas fa-gift"></i>
+                        Kişiye<span>Özel</span>
+                    </a>
+                    <p>Kişiye özel ürünler ile unutulmaz hediyeler yaratıyoruz. Monopoly, takvim, defter ve daha fazlası...</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Hızlı Linkler</h4>
+                    <ul class="footer-links">
+                        <li><a href="#home">Ana Sayfa</a></li>
+                        <li><a href="#products">Ürünler</a></li>
+                        <li><a href="#customization">Nasıl Çalışır</a></li>
+                        <li><a href="#gallery">Galeri</a></li>
+                        <li><a href="#contact">İletişim</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Ürünler</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Kişiye Özel Monopoly</a></li>
+                        <li><a href="#">Kitap Takvim</a></li>
+                        <li><a href="#">Kişiselleştirilmiş Defter</a></li>
+                        <li><a href="#">Özel Planner</a></li>
+                        <li><a href="#">Hediye Kutusu</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h4 class="footer-title">Yardım</h4>
+                    <ul class="footer-links">
+                        <li><a href="#faq">Sıkça Sorulan Sorular</a></li>
+                        <li><a href="#">Teslimat Bilgileri</a></li>
+                        <li><a href="#">İade Politikası</a></li>
+                        <li><a href="#">Gizlilik Politikası</a></li>
+                        <li><a href="#">Kullanım Şartları</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>© 2026 Kişiye Özel. Tüm hakları saklıdır. | Designed with ❤️</p>
+            </div>
+        </div>
+    </footer>
 
     <script>
-        let scene, camera, renderer, controls;
-        let activeProduct, textMesh, particleSystem;
-        let isConfirmed = false;
-
-        function init() {
-            scene = new THREE.Scene();
-            camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
-            camera.position.set(0, 3, 5); // Kamerayı biraz daha yukarıdan baktırıyoruz
-
-            renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            document.getElementById('canvas-container').appendChild(renderer.domElement);
-
-            controls = new THREE.OrbitControls(camera, renderer.domElement);
-            controls.enableDamping = true;
-            controls.dampingFactor = 0.05;
-            controls.enablePan = false;
-            controls.minDistance = 2;
-            controls.maxDistance = 8;
-
-            // Premium Işıklandırma
-            const ambientLight = new THREE.AmbientLight(0xffffff, 0.4);
-            scene.add(ambientLight);
-
-            const spotLight = new THREE.SpotLight(0xfffaed, 1); // Hafif sıcak ışık
-            spotLight.position.set(5, 8, 5);
-            spotLight.angle = Math.PI / 4;
-            spotLight.penumbra = 0.5;
-            scene.add(spotLight);
-
-            const backLight = new THREE.PointLight(0xd4af37, 0.5); // Arkadan altın yansıması
-            backLight.position.set(-5, 3, -5);
-            scene.add(backLight);
-
-            // Başlangıç ürünü
-            switchProduct('monopoly');
-            animate();
-        }
-
-        // Ürün Geometrileri ve Materyalleri
-        function switchProduct(type) {
-            if (activeProduct) {
-                scene.remove(activeProduct);
-            }
-
-            // Koyu gri/siyah premium doku
-            const material = new THREE.MeshPhongMaterial({ 
-                color: 0x151515, 
-                shininess: 40,
-                specular: 0x222222
-            });
-
-            let geometry;
-            if (type === 'monopoly') {
-                // Geniş ince oyun tahtası
-                geometry = new THREE.BoxGeometry(3, 0.1, 3);
-            } else if (type === 'book') {
-                // Kalın kapaklı kitap
-                geometry = new THREE.BoxGeometry(1.8, 2.4, 0.4);
-            } else if (type === 'calendar') {
-                // Masa takvimi yapısı (hafif eğimli)
-                geometry = new THREE.BoxGeometry(2, 1.5, 0.1);
-            }
-
-            activeProduct = new THREE.Mesh(geometry, material);
-
-            // Takvimse hafif dikleştir
-            if(type === 'calendar') {
-                activeProduct.rotation.x = -Math.PI / 6;
-                activeProduct.position.y = 0.5;
-            } else {
-                activeProduct.rotation.x = 0;
-                activeProduct.position.y = 0;
-            }
-
-            scene.add(activeProduct);
-            
-            // Mevcut yazıyı yeni ürüne uygula
-            const currentName = document.getElementById('user-name').value || "İSMİNİZ";
-            applyText(currentName, type);
-        }
-
-        // Şık, Altın Rengi Yazı Oluşturma
-        function createTextTexture(text) {
-            const canvas = document.createElement('canvas');
-            canvas.width = 1024; 
-            canvas.height = 256;
-            const ctx = canvas.getContext('2d');
-            
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // Altın rengi ve zarif tırnaklı font (Playfair/Georgia/Serif)
-            ctx.fillStyle = '#d4af37';
-            ctx.font = 'bold 80px "Playfair Display", Georgia, serif'; 
-            ctx.textAlign = 'center';
-            ctx.textBaseline = 'middle';
-            
-            // Metne hafif gölge ekleyerek kabartma/varak hissi verme
-            ctx.shadowColor = 'rgba(0,0,0,0.5)';
-            ctx.shadowBlur = 4;
-            ctx.shadowOffsetX = 2;
-            ctx.shadowOffsetY = 2;
-
-            ctx.fillText(text.toUpperCase(), canvas.width / 2, canvas.height / 2);
-            
-            const texture = new THREE.CanvasTexture(canvas);
-            texture.needsUpdate = true;
-            return texture;
-        }
-
-        // Yazıyı ürüne yerleştirme
-        function applyText(text, type) {
-            if (textMesh) {
-                activeProduct.remove(textMesh);
-            }
-
-            const textGeo = new THREE.PlaneGeometry(2.5, 0.625); // Oranı canvas'a uygun (1024x256)
-            const textMat = new THREE.MeshBasicMaterial({
-                map: createTextTexture(text),
-                transparent: true,
-                alphaTest: 0.1
-            });
-
-            textMesh = new THREE.Mesh(textGeo, textMat);
-
-            // Ürüne göre yazının nerede duracağını ayarla
-            if (type === 'monopoly') {
-                textMesh.position.set(0, 0.051, 0); // Tahtanın tam üstü
-                textMesh.rotation.x = -Math.PI / 2; // Yere paralel
-            } else if (type === 'book') {
-                textMesh.position.set(0, 0.5, 0.201); // Kitabın ön kapağının üst kısmı
-                textMesh.rotation.x = 0;
-                textMesh.scale.set(0.6, 0.6, 0.6); // Kitaba sığması için küçült
-            } else if (type === 'calendar') {
-                textMesh.position.set(0, 0, 0.051); // Takvimin ön yüzü
-                textMesh.rotation.x = 0;
-                textMesh.scale.set(0.7, 0.7, 0.7);
-            }
-
-            activeProduct.add(textMesh);
-        }
-
-        // Arayüz Dinleyicileri (UI Listeners)
-        document.querySelectorAll('.product-btn').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                if(isConfirmed) return;
-                document.querySelector('.product-btn.active').classList.remove('active');
-                e.target.classList.add('active');
-                switchProduct(e.target.dataset.type);
-            });
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-menu').classList.toggle('active');
         });
 
-        document.getElementById('user-name').addEventListener('input', (e) => {
-            if(isConfirmed) return;
-            const type = document.querySelector('.product-btn.active').dataset.type;
-            applyText(e.target.value || "İSMİNİZ", type);
-        });
-
-        // Tasarımı Onayla Butonu
-        document.getElementById('btn-confirm').addEventListener('click', () => {
-            const name = document.getElementById('user-name').value.trim();
-            if(!name) {
-                alert("Lütfen tasarıma eklenecek bir isim yazın!");
-                return;
-            }
-
-            isConfirmed = true;
-            document.getElementById('ui-panel').classList.add('hidden');
-            
-            // Kamerayı ürüne odakla
-            const targetCamPos = new THREE.Vector3(0, 2, 4);
-            let camProgress = 0;
-            const startCamPos = camera.position.clone();
-
-            function focusAnimation() {
-                camProgress += 0.02;
-                if(camProgress <= 1) {
-                    camera.position.lerpVectors(startCamPos, targetCamPos, camProgress);
-                    camera.lookAt(0,0,0);
-                    requestAnimationFrame(focusAnimation);
-                } else {
-                    createCelebration();
-                    setTimeout(() => {
-                        document.getElementById('result-screen').classList.add('fade-in');
-                    }, 500);
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if(target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    document.querySelector('.nav-menu').classList.remove('active');
                 }
-            }
-            focusAnimation();
+            });
         });
 
-        // Altın Partikül Efekti (Kutlama)
-        function createCelebration() {
-            const particleCount = 200;
-            const geometry = new THREE.BufferGeometry();
-            const positions = new Float32Array(particleCount * 3);
-            const velocities = [];
+        // Product Filter
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const productCards = document.querySelectorAll('.product-card');
 
-            for(let i = 0; i < particleCount * 3; i+=3) {
-                positions[i] = (Math.random() - 0.5) * 2; // x
-                positions[i+1] = Math.random() * 2;       // y
-                positions[i+2] = (Math.random() - 0.5) * 2; // z
-
-                velocities.push({
-                    x: (Math.random() - 0.5) * 0.05,
-                    y: Math.random() * 0.05 + 0.02,
-                    z: (Math.random() - 0.5) * 0.05
-                });
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-
-            const material = new THREE.PointsMaterial({
-                color: 0xd4af37,
-                size: 0.08,
-                transparent: true,
-                blending: THREE.AdditiveBlending
-            });
-
-            particleSystem = new THREE.Points(geometry, material);
-            particleSystem.userData = { velocities: velocities };
-            scene.add(particleSystem);
-        }
-
-        // Render Döngüsü
-        function animate() {
-            requestAnimationFrame(animate);
-
-            // Kullanıcı onaylamadıysa ürün yavaşça dönsün
-            if (!isConfirmed && activeProduct) {
-                activeProduct.rotation.y += 0.002;
-            }
-
-            // Partikül animasyonu
-            if (particleSystem) {
-                const positions = particleSystem.geometry.attributes.position.array;
-                const vels = particleSystem.userData.velocities;
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                filterBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
                 
-                for (let i = 0, j=0; i < positions.length; i += 3, j++) {
-                    positions[i] += vels[j].x;
-                    positions[i+1] += vels[j].y;
-                    positions[i+2] += vels[j].z;
-
-                    // Yerçekimi etkisi (yavaşça aşağı düşme)
-                    vels[j].y -= 0.001; 
-
-                    if (positions[i+1] < -2) {
-                        positions[i+1] = 2; // Ekranın üstünden tekrar başla
-                        vels[j].y = Math.random() * 0.05 + 0.02;
+                const filter = this.dataset.filter;
+                
+                productCards.forEach(card => {
+                    if(filter === 'all' || card.dataset.category === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
                     }
-                }
-                particleSystem.geometry.attributes.position.needsUpdate = true;
-            }
-
-            controls.update();
-            renderer.render(scene, camera);
-        }
-
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            });
         });
 
-        init();
+        // FAQ Accordion
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Form Submit
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Siparişiniz alındı! En kısa sürede sizinle iletişime geçeceğiz. Teşekkürler!');
+            this.reset();
+        });
+
+        // Scroll to contact with product
+        function scrollToContact(product) {
+            document.getElementById('productSelect').value = product;
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if(window.scrollY > 100) {
+                header.style.boxShadow = '0 5px 30px rgba(0,0,0,0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 20px rgba(0,0,0,0.08)';
+            }
+        });
     </script>
 </body>
 </html>
