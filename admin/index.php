@@ -41,7 +41,7 @@ $sonSiparisler = $db->query("SELECT * FROM siparisler ORDER BY id DESC LIMIT 10"
                 <a href="urunler.php" class="admin-menu-item"><i class="fas fa-box"></i> Ürünler</a>
                 <a href="kategoriler.php" class="admin-menu-item"><i class="fas fa-tags"></i> Kategoriler</a>
                 <a href="siparisler.php" class="admin-menu-item"><i class="fas fa-shopping-cart"></i> Siparişler</a>
-                <a href="kullanicilar.php" class="admin-menu-item"><i class="fas fa-users"></i> Kullanıcılar</a>
+                <a href="yorumlar.php" class="admin-menu-item"><i class="fas fa-comments"></i> Yorumlar</a>
                 <a href="ayarlar.php" class="admin-menu-item"><i class="fas fa-cog"></i> Ayarlar</a>
                 <a href="../cikis.php" class="admin-menu-item"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
             </nav>

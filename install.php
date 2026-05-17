@@ -96,6 +96,22 @@ try {
     )");
     echo "siparis_urunleri tablosu oluşturuldu.<br>";
     
+    // Yorumlar tablosu
+    $conn->exec("CREATE TABLE IF NOT EXISTS yorumlar (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        urun_id INT NOT NULL,
+        kullanici_id INT,
+        ad_soyad VARCHAR(100) NOT NULL,
+        email VARCHAR(100),
+        puan INT DEFAULT 5,
+        yorum TEXT NOT NULL,
+        durum ENUM('beklemede','onaylandi','reddedildi') DEFAULT 'beklemede',
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (urun_id) REFERENCES urunler(id),
+        FOREIGN KEY (kullanici_id) REFERENCES kullanicilar(id)
+    )");
+    echo "yorumlar tablosu oluşturuldu.<br>";
+    
     // Örnek verileri ekle
     // Kategoriler
     $kategoriCheck = $conn->query("SELECT COUNT(*) FROM kategoriler")->fetchColumn();

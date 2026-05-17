@@ -43,6 +43,7 @@ $siparisler = $db->query("SELECT * FROM siparisler ORDER BY id DESC")->fetchAll(
                 <a href="index.php" class="admin-menu-item"><i class="fas fa-home"></i> Dashboard</a>
                 <a href="urunler.php" class="admin-menu-item"><i class="fas fa-box"></i> Ürünler</a>
                 <a href="siparisler.php" class="admin-menu-item active"><i class="fas fa-shopping-cart"></i> Siparişler</a>
+                <a href="yorumlar.php" class="admin-menu-item"><i class="fas fa-comments"></i> Yorumlar</a>
                 <a href="../cikis.php" class="admin-menu-item"><i class="fas fa-sign-out-alt"></i> Çıkış</a>
             </nav>
         </aside>
